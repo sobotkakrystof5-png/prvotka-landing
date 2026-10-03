@@ -96,6 +96,12 @@ Aby to další session „neopravovala“ jako chybu.
 
 Nejnovější nahoře.
 
+### 2026-10-03 – Nahrání projektu na veřejný GitHub
+- **Co:** Vytvořen první commit celého projektu a veřejné repo `sobotkakrystof5-png/prvotka-landing` (větev `main`, remote `origin`).
+- **Proč:** na pokyn zadavatele.
+- **Dopad:** repo je veřejné, tedy i `PROJECT-BRIEF.md`, `memory/`, `.claude/` a `AGENTS.md` jsou veřejně čitelné. Tajemství v repu nejsou, `.env*` je ignorované, v git je jen `.env.example`.
+- **Soubory:** celý repozitář
+
 ### 2026-10-03 – Volba domény prvotka.cz
 - **Co:** Zadavatel zvolil doménu `prvotka.cz`. Kontrola dostupnosti přes Vercel ukázala volné .cz, .com, .app, .io, .ai, .eu, .net, .online, u .cz ale výsledek není spolehlivý (Vercel .cz neprodává). V kódu se zatím nic nezměnilo, `site.domain` zůstává placeholder.
 - **Proč:** Na pokyn zadavatele. Doménu do `site.ts` nepíšu před registrací, protože by canonical, sitemap a OG začaly mířit na neexistující adresu.
