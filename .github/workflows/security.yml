@@ -1,0 +1,59 @@
+# Audit závislostí, hledání tajemství a kontrola hlaviček živého webu.
+# Běží až po založení GitHub repa a pushi (se souhlasem zadavatele).
+
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # pondělí ráno, zachytí nově zveřejněné CVE
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Dev závislosti se k návštěvníkům nedostanou, padat kvůli nim jen učí job ignorovat.
+      - run: npm audit --omit=dev --audit-level=high
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # celá historie, i později smazaný klíč je uniklý klíč
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  headers:
+    # Má smysl až s živým webem. SITE_URL nastavit jako proměnnou repozitáře.
+    if: vars.SITE_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash .claude/security/security-check.sh "${{ vars.SITE_URL }}"

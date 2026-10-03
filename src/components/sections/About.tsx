@@ -1,0 +1,61 @@
+import { site } from "@/config/site";
+import { cs } from "@/content/cs";
+import { Section, SectionTitle } from "@/components/layout/Section";
+import { Placeholder } from "@/components/motifs/Placeholder";
+import { BrandMarquee } from "./BrandMarquee";
+import { VideoPlayer } from "./VideoPlayer";
+
+/**
+ * (08) Kdo za tím stojí. Stránka vedená zakladatelem (princip Ben AI):
+ * fotka, příběh v první osobě, video a pás vlastních značek.
+ * Fotka i video jsou zatím označené placeholdery s pevným poměrem stran.
+ */
+export function About() {
+  const { about } = cs;
+  return (
+    <>
+      <Section id="kdo-za-tim-stoji" tone="deep" spacing="pt-20 pb-16 lg:pt-28 lg:pb-20">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-4">
+            {/* Fotka CEO: placeholder s pevným aspect-ratio, žádný layout shift */}
+            <div
+              role="img"
+              aria-label={about.photoAlt}
+              className="ledger relative flex aspect-[4/5] w-full max-w-[22rem] items-end rounded-sm border border-dashed border-field-border bg-paper p-4 [--ledger-step:1.75rem]"
+            >
+              <Placeholder>{about.photoPlaceholder}</Placeholder>
+            </div>
+            <p className="mt-4 font-heading text-[1.35rem] leading-tight">{site.ceo}</p>
+            <p className="type-label mt-1">{about.role}</p>
+          </div>
+
+          <div className="lg:col-span-8">
+            <SectionTitle id="kdo-za-tim-stoji" className="max-w-[18ch]">
+              {about.title}
+            </SectionTitle>
+            <div className="mt-8 flex max-w-[58ch] flex-col gap-5 text-[1.12rem] leading-relaxed">
+              {about.story.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              <p className="text-ink-muted">{about.team}</p>
+            </div>
+
+            <div className="mt-12 max-w-[44rem]">
+              {site.videoSrc ? (
+                <VideoPlayer src={site.videoSrc} />
+              ) : (
+                <div className="ledger flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-field-border bg-paper text-center [--ledger-step:1.75rem]">
+                  <p className="font-heading text-[1.5rem]">{about.video.placeholder}</p>
+                  <Placeholder>{about.video.tag}</Placeholder>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </Section>
+      <div className="bg-paper-deep">
+        <BrandMarquee />
+      </div>
+    </>
+  );
+}

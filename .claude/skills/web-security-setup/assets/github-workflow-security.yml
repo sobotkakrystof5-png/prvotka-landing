@@ -1,0 +1,46 @@
+# .github/workflows/security.yml
+# Dependency audit, secret scanning and a live header check on every push.
+
+name: security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'   # Monday morning, catches newly disclosed CVEs
+
+permissions:
+  contents: read
+
+jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # Dev dependencies do not ship to users; failing on them only trains
+      # people to ignore this job.
+      - run: npm audit --omit=dev --audit-level=high
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, a key removed later is still leaked
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  headers:
+    # Only meaningful once the site is live. Set SITE_URL as a repo variable.
+    if: vars.SITE_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash .claude/security/security-check.sh "${{ vars.SITE_URL }}"

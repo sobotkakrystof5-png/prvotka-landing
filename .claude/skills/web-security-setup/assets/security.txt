@@ -1,0 +1,10 @@
+# Ulož jako /.well-known/security.txt (a volitelně i /security.txt).
+# Standard RFC 9116. Říká nálezcům zranitelnosti, kam mají psát.
+# Expires je povinné pole — dej si připomínku na obnovení.
+
+Contact: mailto:security@example.com
+Contact: https://example.com/kontakt
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: cs, en, sk
+Canonical: https://example.com/.well-known/security.txt
+Policy: https://example.com/bezpecnost

@@ -1,0 +1,30 @@
+# Netlify / Cloudflare Pages
+# Umísti do kořene publikované složky (public/ nebo dist/).
+# Odsazení dvěma mezerami je povinné, jinak se pravidlo ignoruje.
+
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=(), xr-spatial-tracking=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  X-XSS-Protection: 0
+  X-DNS-Prefetch-Control: off
+  X-Permitted-Cross-Domain-Policies: none
+
+# Hashované assety se můžou cachovat navždy
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML se cachovat nemá, jinak lidem zůstane stará verze
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
