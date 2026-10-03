@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_INPUT,
   clampInput,
+  INVOICE_STOPS,
   computeSavings,
   checkHoursPerMonth,
+  nearestStopIndex,
   manualHoursPerMonth,
 } from "./savings";
 
@@ -98,6 +100,34 @@ describe("computeSavings", () => {
     });
     expect(result.breakEvenInvoicesPerMonth).toBeCloseTo(364.583, 3);
     expect(result.series[24].perDocumentCost).toBe(4 * 200 * 24);
+  });
+});
+
+describe("řada pro graf nákladů (dnes / s aplikací)", () => {
+  it("rozdíl kumulativních nákladů je kumulativní úspora", () => {
+    const result = computeSavings(DEFAULT_INPUT, { horizonMonths: 24 });
+    // 5 833,33 Kč × 24 = 140 000 Kč, 1 166,67 Kč × 24 = 28 000 Kč
+    expect(result.series[24].manualCost).toBeCloseTo(140000, 6);
+    expect(result.series[24].checkCost).toBeCloseTo(28000, 6);
+    for (const point of result.series) {
+      expect(point.manualCost - point.checkCost).toBeCloseTo(point.savings, 6);
+    }
+  });
+});
+
+describe("zastávky posuvníku faktur", () => {
+  it("pokrývají celý rozsah vzestupně a obsahují výchozí hodnotu", () => {
+    expect(INVOICE_STOPS[0]).toBe(50);
+    expect(INVOICE_STOPS[INVOICE_STOPS.length - 1]).toBe(3000);
+    expect(INVOICE_STOPS.every((value, index) => index === 0 || value > INVOICE_STOPS[index - 1])).toBe(true);
+    expect(INVOICE_STOPS).toContain(DEFAULT_INPUT.invoicesPerMonth);
+  });
+
+  it("najde nejbližší zastávku k zapsané hodnotě", () => {
+    expect(INVOICE_STOPS[nearestStopIndex(INVOICE_STOPS, 200)]).toBe(200);
+    expect(INVOICE_STOPS[nearestStopIndex(INVOICE_STOPS, 330)]).toBe(325);
+    expect(INVOICE_STOPS[nearestStopIndex(INVOICE_STOPS, 1240)]).toBe(1200);
+    expect(nearestStopIndex(INVOICE_STOPS, 99999)).toBe(INVOICE_STOPS.length - 1);
   });
 });
 

@@ -78,7 +78,8 @@ Aby to další session „neopravovala“ jako chybu.
 - **Sekce Proč to řešit nemá žádné číslo** (2026-10-03). Žádné „17 h“, „3–7 min“ ani velké číslo vedle seznamu. Nevracet.
 - **Ukázky v Proč to řešit nepoužívají razítko** (`Stamp`). Razítka má stránka max 3, překlep a „součet nesedí“ jsou ve `warn` barvách.
 - **Čísla a obrysy souborů v pozadí jsou na mobilu vypnuté** (jako dřív, brief to dovoluje). Na úzkém displeji by se pletly do textu.
-- **Při `showPrice: false` graf kalkulačky bez investice a návratnosti, bez srovnání s poplatkem za doklad.** Jinak by prozradil cenu.
+- **Při `showPrice: false` graf kalkulačky bez investice a návratnosti, bez srovnání s poplatkem za doklad.** Jinak by prozradil cenu. Čára „s aplikací“ je pak jen čas na kontrolu.
+- **Čáry grafu kalkulačky jsou rovné, ne „načrtnuté“** (2026-10-03). Výpočet je přesný a vlnka působila jako šum v datech. Nevracet bez pokynu.
 - **Odkaz na video v heru se nevykresluje, dokud `videoSrc` je `null`.** Nesliboval by obsah, který neexistuje.
 - **Rate limit formuláře na IP není v kódu.** Limit v paměti na Vercelu nefunguje (DECISIONS.md #005). Řeší se ve Fázi 6 na náhledovém nasazení. Do té doby honeypot + minimální doba 3 s.
 - **Formulář není v initial HTML.** Načítá se po hydrataci (`ContactFormLoader`), aby nezdržoval obsah nad ohybem. V HTML je zástupný blok a `<noscript>` s e-mailem. Texty sekce Kontakt jsou v HTML normálně.
@@ -95,6 +96,12 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-03 – Přestavba grafu kalkulačky a nelineární posuvník faktur
+- **Co:** Graf místo jedné vlnité čáry kumulativní úspory ukazuje dvě kumulativní čáry nákladu (ruční přepis dnes, kontrola s aplikací), plocha mezi nimi je úspora s popiskem „ušetříte“. Nad grafem výkaz pro vybraný měsíc (dnes / s aplikací / ušetříte), měsíc se vybírá myší, dotykem i klávesnicí (`role="slider"`, šipky, Home/End, PageUp/Down). Při změně vstupů čáry plynule přejdou (350 ms, při omezených animacích hned). Osa Y má hysterezi (přepočet až při přetečení nebo poklesu pod třetinu), takže víc faktur = viditelně vyšší čáry, dřív se osa přeškálovala a obrázek zůstal stejný. Rovné čáry místo „načrtnutých“. Osa má jednotku Kč a kulaté dílky, miliony s desetinným místem. Při `showPrice` se k čáře s aplikací přičte cena a správa a návratnost je průsečík. Posuvník faktur je nelineární (`INVOICE_STOPS` v `savings.ts`: do 300 po 10, do 1 000 po 25, dál po 100) s popisky 300 a 1 000 na skutečné pozici. Levá karta kalkulačky už se nenatahuje na výšku pravého sloupce (`lg:self-start`).
+- **Proč:** Na pokyn zadavatele, graf „absolutně nefungoval a nedával smysl“: jedna přímka z nuly, osa se při každé změně přeškálovala, takže vypadal pořád stejně, a nic nesrovnával. Posuvník faktur měl běžné hodnoty 100–500 v prvních milimetrech.
+- **Dopad:** `SavingsPoint` má nová pole `manualCost` a `checkCost`, prop `description` grafu zrušený (popis si graf skládá sám). Texty grafu v `cs.ts` přepsané. Cena se dál nikde neukazuje. CSP beze změny. Odchylka od briefu 6.6 („načrtnutá“ linka, „jen kumulativní úspora“) zapsaná do `PROJECT-BRIEF.md`. Ověřeno: typy, lint, 41 testů, Playwright Chromium + WebKit na 360/768/1024/1440 px s omezenými animacemi i bez nich, bez vodorovného scrollu, bez chyb v konzoli, ovládání klávesnicí.
+- **Soubory:** `src/lib/savings.ts`, `src/lib/savings.test.ts`, `src/components/sections/SavingsChart.tsx`, `src/components/sections/CalculatorWidget.tsx`, `src/content/cs.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
 
 ### 2026-10-03 – Oprava CI: typecheck a audit závislostí
 - **Co:** Skript `typecheck` nově spouští nejdřív `next typegen` (v CI chyběl generovaný typ `LayoutProps`). `shadcn` přesunut z `dependencies` do `devDependencies`, protože jde o CLI a jeho tranzitivní zranitelnost (`braces`) shazovala `npm audit --omit=dev`.

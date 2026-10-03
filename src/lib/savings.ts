@@ -30,6 +30,10 @@ export interface SavingsOptions {
 
 export interface SavingsPoint {
   month: number;
+  /** Kumulativní náklad ručního přepisu (dnes) v Kč. */
+  manualCost: number;
+  /** Kumulativní náklad kontroly výstupu s aplikací v Kč (bez ceny a správy). */
+  checkCost: number;
   /** Kumulativní úspora práce v Kč. */
   savings: number;
   /** Kumulativní investice (cena + správa) v Kč, pokud je cena známá. */
@@ -83,6 +87,30 @@ export const DEFAULT_HORIZON_MONTHS = 24;
 /** Délka pracovního dne pro přepočet ušetřených hodin na dny. */
 export const WORKDAY_HOURS = 8;
 export const DEFAULT_PER_DOCUMENT_FEE = 4;
+
+/**
+ * Zastávky posuvníku faktur. Rozsah 50–3 000 je široký a většina kanceláří
+ * je pod 500, proto posuvník není lineární: do 300 po 10, do 1 000 po 25,
+ * dál po 100. Šipka na klávesnici posune vždy o jednu zastávku.
+ */
+export const INVOICE_STOPS: readonly number[] = [
+  ...steps(50, 300, 10),
+  ...steps(325, 1000, 25),
+  ...steps(1100, 3000, 100),
+];
+
+function steps(from: number, to: number, step: number): number[] {
+  return Array.from({ length: Math.floor((to - from) / step) + 1 }, (_, index) => from + index * step);
+}
+
+/** Index nejbližší zastávky posuvníku k libovolné hodnotě (např. zapsané do pole). */
+export function nearestStopIndex(stops: readonly number[], value: number): number {
+  let best = 0;
+  for (let index = 1; index < stops.length; index += 1) {
+    if (Math.abs(stops[index] - value) < Math.abs(stops[best] - value)) best = index;
+  }
+  return best;
+}
 
 function clamp(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
@@ -140,10 +168,15 @@ export function computeSavings(input: SavingsInput, options: SavingsOptions = {}
     breakEvenInvoicesPerMonth = appCostOverHorizon / (perDocumentFee * horizon);
   }
 
+  const manualCostPerMonth = manualHours * hourlyCost;
+  const checkCostPerMonth = checkHours * hourlyCost;
+
   const series: SavingsPoint[] = [];
   for (let month = 0; month <= horizon; month += 1) {
     series.push({
       month,
+      manualCost: manualCostPerMonth * month,
+      checkCost: checkCostPerMonth * month,
       savings: savingsPerMonth * month,
       investment: price === null ? null : price + (monthlyFee ?? 0) * month,
       perDocumentCost:
@@ -153,9 +186,9 @@ export function computeSavings(input: SavingsInput, options: SavingsOptions = {}
 
   return {
     manualHoursPerMonth: manualHours,
-    manualCostPerMonth: manualHours * hourlyCost,
+    manualCostPerMonth,
     checkHoursPerMonth: checkHours,
-    checkCostPerMonth: checkHours * hourlyCost,
+    checkCostPerMonth,
     minutesSavedPerInvoice,
     hoursSavedPerMonth,
     savingsPerMonth,

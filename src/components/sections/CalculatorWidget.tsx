@@ -10,7 +10,9 @@ import {
   DEFAULT_INPUT,
   DEFAULT_PER_DOCUMENT_FEE,
   INPUT_LIMITS,
+  INVOICE_STOPS,
   computeSavings,
+  nearestStopIndex,
   type SavingsInput,
 } from "@/lib/savings";
 import { cn } from "@/lib/utils";
@@ -52,7 +54,6 @@ export function CalculatorWidget() {
     [input, showPrice, compare, perDocumentFee],
   );
 
-  const total = result.series[result.series.length - 1]?.savings ?? 0;
   // Pracovní dny: od deseti celé, pod deset na jedno desetinné místo.
   const workDaysCount =
     result.workDaysSavedPerYear >= 10
@@ -62,10 +63,11 @@ export function CalculatorWidget() {
 
   return (
     <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-      <div className="rounded-sm border border-rule bg-sheet p-5 shadow-paper sm:p-7 lg:col-span-5">
+      <div className="rounded-sm border border-rule bg-sheet p-5 shadow-paper sm:p-7 lg:col-span-5 lg:self-start">
         <NumberSlider
           field={MAIN_FIELD}
           size="lg"
+          stops={INVOICE_STOPS}
           value={input[MAIN_FIELD]}
           onChange={(value) => setInput((current) => ({ ...current, [MAIN_FIELD]: value }))}
         />
@@ -196,7 +198,6 @@ export function CalculatorWidget() {
             showInvestment={showPrice}
             showPerDocument={showPrice && compare}
             paybackMonths={result.paybackMonths}
-            description={calculator.chart.description(DEFAULT_HORIZON_MONTHS, `${czk.format(Math.round(total / 100) * 100)} Kč`)}
           />
           {showPrice && compare && result.breakEvenInvoicesPerMonth !== null ? (
             <p className="mt-4 text-[0.95rem]">
@@ -284,12 +285,15 @@ function NumberSlider({
   value,
   onChange,
   size = "default",
+  stops,
 }: {
   field: FieldKey;
   value: number;
   onChange: (value: number) => void;
   /** `lg` pro hlavní vstup (počet faktur). */
   size?: "default" | "lg";
+  /** Nelineární posuvník: posouvá se po zastávkách, ne po `step`. */
+  stops?: readonly number[];
 }) {
   const id = useId();
   const config = cs.calculator.inputs[field];
@@ -322,21 +326,55 @@ function NumberSlider({
       </div>
       <div className="mt-3">
         <div>
-          <Slider
-            min={limits.min}
-            max={limits.max}
-            step={limits.step}
-            value={[value]}
-            onValueChange={([next]) => onChange(next)}
-            thumbLabel={config.label}
-            thumbValueText={`${plain.format(value)} ${config.unit}`}
-          />
-          <div aria-hidden="true" className="mt-1.5 flex justify-between font-mono text-[0.7rem] text-ink-muted">
-            <span>{plain.format(limits.min)}</span>
-            <span>{plain.format(limits.max)}</span>
-          </div>
+          {stops ? (
+            <Slider
+              min={0}
+              max={stops.length - 1}
+              step={1}
+              value={[nearestStopIndex(stops, value)]}
+              onValueChange={([index]) => onChange(stops[index])}
+              thumbLabel={config.label}
+              thumbValueText={`${plain.format(value)} ${config.unit}`}
+            />
+          ) : (
+            <Slider
+              min={limits.min}
+              max={limits.max}
+              step={limits.step}
+              value={[value]}
+              onValueChange={([next]) => onChange(next)}
+              thumbLabel={config.label}
+              thumbValueText={`${plain.format(value)} ${config.unit}`}
+            />
+          )}
+          <SliderScale min={limits.min} max={limits.max} stops={stops} />
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Popisky pod posuvníkem. U nelineárního posuvníku i mezilehlé hodnoty
+ * na jejich skutečné pozici, aby bylo vidět, že stupnice není rovnoměrná.
+ */
+function SliderScale({ min, max, stops }: { min: number; max: number; stops?: readonly number[] }) {
+  const marks = stops ? [300, 1000].filter((mark) => stops.includes(mark)) : [];
+  return (
+    <div aria-hidden="true" className="relative mt-1.5 flex justify-between font-mono text-[0.7rem] text-ink-muted">
+      <span>{plain.format(min)}</span>
+      {stops
+        ? marks.map((mark) => (
+            <span
+              key={mark}
+              className="absolute -translate-x-1/2"
+              style={{ left: `${(stops.indexOf(mark) / (stops.length - 1)) * 100}%` }}
+            >
+              {plain.format(mark)}
+            </span>
+          ))
+        : null}
+      <span>{plain.format(max)}</span>
     </div>
   );
 }

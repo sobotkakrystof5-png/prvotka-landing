@@ -660,16 +660,26 @@ const raw = {
       estimate: "odhad",
     },
     chart: {
-      title: (months: number) => `Kumulativní úspora za ${months} měsíců`,
-      titleWithPrice: (months: number) => `Úspora proti investici za ${months} měsíců`,
-      savings: "Ušetřená práce",
-      investment: "Cena a správa",
-      perDocument: "Poplatek za doklad",
+      title: (months: number) => `Kolik vás faktury stojí za ${months} měsíců`,
+      titleWithPrice: (months: number) => `Kolik vás faktury stojí za ${months} měsíců, včetně ceny a správy`,
+      manual: "Ruční přepis dnes",
+      withApp: "Kontrola s aplikací",
+      withAppPrice: "S aplikací, včetně ceny a správy",
+      perDocument: "Poplatek za doklad a kontrola",
+      saved: "Ušetříte",
+      difference: "Rozdíl",
+      gap: "ušetříte",
       payback: "návratnost",
-      month: "měsíc",
       axisMonths: "měsíce",
-      description: (months: number, total: string) =>
-        `Graf: za ${months} měsíců ušetříte podle zadaných hodnot ${total}. Úspora roste každý měsíc o stejnou částku.`,
+      axisUnit: "Kč",
+      // 1 → „Po 1 měsíci“, jinak „Po N měsících“
+      after: (months: number) => `Po ${months} ${months === 1 ? "měsíci" : "měsících"}`,
+      hint: "Posuňte se v grafu myší, prstem nebo šipkami.",
+      sliderLabel: "Měsíc v grafu",
+      valueText: (months: number, manual: string, withApp: string, saved: string) =>
+        `Po ${months} ${months === 1 ? "měsíci" : "měsících"}: ruční přepis ${manual}, s aplikací ${withApp}, rozdíl ${saved}.`,
+      description: (months: number, manual: string, withApp: string, saved: string) =>
+        `Graf nákladů na zpracování faktur za ${months} měsíců. Ruční přepis vás podle zadaných hodnot stojí ${manual}, kontrola s aplikací ${withApp}. Rozdíl ${saved} je úspora a s každým měsícem roste.`,
     },
     perDocument: {
       toggle: "Porovnat s poplatkem za doklad",
