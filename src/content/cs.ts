@@ -112,7 +112,7 @@ const raw = {
   proc: {
     // Příběh podle zadavatele (2026-10-03). Bez počtu kanceláří a bez citací, nemáme je doložené.
     story:
-      "Když jsme rozjížděli Alteno, hledali jsme práci u účetních. Obvolali jsme jich hodně a skoro v každé kanceláři řešili to samé.",
+      "Když jsme rozjížděli Alteno, obvolávali jsme účetní kvůli novým zakázkám. Všichni řešili to samé.",
     title: "Každou fakturu dnes někdo přepisuje *ručně*.",
     items: [
       "Faktury chodí v PDF, jako sken i fotka z mobilu.",
@@ -459,14 +459,14 @@ const raw = {
   },
 
   custom: {
-    title: "Aplikace postavená pro *vaši kancelář*, ne pro všechny",
-    lead: "Každou aplikaci stavíme pro jednu firmu. Nekupujete krabicový program, na který si musíte zvyknout. Postavíme ho kolem toho, jak u vás s fakturami opravdu pracujete.",
+    title: "Aplikace navržená přesně pro *vaši kancelář*",
+    lead: "Žádný krabicový program, kterému se musíte přizpůsobit. Aplikaci stavíme jen pro vaši kancelář, podle toho, jak u vás s fakturami opravdu pracujete.",
     stepsTitle: "Jak spolu postupujeme",
     steps: [
-      "Projdeme, jak k vám faktury chodí a v čem účtujete.",
-      "Aplikaci nastavíme na váš program a vaše zvyklosti.",
-      "Vyzkoušíme ji na vašich skutečných fakturách.",
-      "Zaškolíme vás a necháme vás pracovat.",
+      { title: "Rozbor", text: "Projdeme, jak k vám faktury chodí a v čem účtujete." },
+      { title: "Nastavení", text: "Aplikaci nastavíme na váš program a vaše zvyklosti." },
+      { title: "Zkouška", text: "Vyzkoušíme ji na vašich skutečných fakturách." },
+      { title: "Předání", text: "Zaškolíme vás a necháme vás pracovat." },
     ],
     counterLabel: (current: number, total: number) => `Bod ${current} z ${total}`,
     items: [
@@ -788,8 +788,7 @@ const raw = {
   },
 
   contact: {
-    title: "Projdeme spolu, jestli se vám to vyplatí",
-    lead: "Napište mi pár údajů o vaší kanceláři. Ozvu se a domluvíme hovor. Projdeme, co by vám aplikace ušetřila, a řeknu vám *na rovinu*, jestli se vyplatí, nebo ne.",
+    title: "Postavím aplikaci přesně pro vaši kancelář",
     detailsTitle: "Kontakt",
     role: "CEO",
     emailLabel: "E-mail",

@@ -2,7 +2,6 @@ import { isPlaceholder, site } from "@/config/site";
 import { cs } from "@/content/cs";
 import { Section, SectionTitle } from "@/components/layout/Section";
 import { Placeholder, withPlaceholders } from "@/components/motifs/Placeholder";
-import { RichText } from "@/components/motifs/RichText";
 import { ContactFormLoader } from "./ContactFormLoader";
 
 /**
@@ -29,9 +28,6 @@ export function Contact() {
           <SectionTitle id="kontakt" className="max-w-[16ch]">
             {contact.title}
           </SectionTitle>
-          <p className="mt-6 max-w-[42ch] text-[1.08rem] leading-relaxed text-ink-muted">
-            <RichText text={contact.lead} />
-          </p>
         </div>
 
         <div className="rounded-sm border border-rule bg-paper-deep p-5 sm:p-8 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">

@@ -189,7 +189,7 @@ export const site = {
   domain: "[DOMÉNA]",
   ceo: "Kryštof Sobotka",
   email: "[E-MAIL]",
-  phone: "[TELEFON]",
+  phone: "+420 604 837 333",
   ico: "[IČO]",
   address: "[MÍSTO PODNIKÁNÍ]",       // pravděpodobně povinné podle § 435 OZ, ověřit
   showPrice: false,
@@ -313,7 +313,7 @@ Podle Alteno, převedené na faktury. Tři sloupce, na mobilu pod sebou:
 Pod demem štítek „Ukázka s vymyšlenými daty“. Tři kroky textem pod demem nejsou, celý tok ukazuje workflow nad demem. Všechna data v demu jsou vymyšlená a smyšlené firmy nesmí kolidovat se skutečnými (například „Dodavatel s.r.o.“, IČO 12345678).
 
 ### 6.4 Postaveno pro vaši firmu – `#na-miru`
-- Nadpis (návrh): „Aplikace postavená pro vaši kancelář, ne pro všechny“.
+- Nadpis (návrh): „Aplikace navržená přesně pro vaši kancelář“ (2026-10-03).
 - Pod úvodem postup ve čtyřech krocích (2026-10-03): projdeme, jak k vám faktury chodí → nastavíme aplikaci na váš program a zvyklosti → vyzkoušíme ji na vašich fakturách → zaškolíme vás. Jen fakta z části 1.
 - Pět bodů z části 1 („Proč na míru“) jako výhody s počítadlem „01 / 05“ ve stylu Alteno. U každého bodu malá živá ukázka UI místo ikony (styl Chase AI), například:
   - výstup pro váš program: přepínač programů, který mění štítek exportu,
@@ -423,7 +423,7 @@ Zásada: každá animace vysvětluje, co produkt dělá, nebo vede pozornost k j
 
 ### Rozložení
 Dva sloupce (na mobilu pod sebou, formulář první):
-- **Vlevo:** nadpis (návrh: „Projdeme spolu, jestli se vám to vyplatí“), krátký odstavec v první osobě, kontaktní údaje (Kryštof Sobotka, CEO · e-mail · telefon · IČO), fotka `[FOTO]`. Pod tím blok **„Co můžete čekat“** (styl Chase AI). Obsah jen z ověřených faktů: `[DOBA ODPOVĚDI]`, `[DÉLKA ÚVODNÍHO HOVORU]`, „Nezávazně“. Neověřené body nezobrazuj.
+- **Vlevo:** nadpis (návrh: „Postavím aplikaci přesně pro vaši kancelář“), bez perexu (na pokyn zadavatele), kontaktní údaje (Kryštof Sobotka, CEO · e-mail · telefon · IČO), fotka `[FOTO]`. Pod tím blok **„Co můžete čekat“** (styl Chase AI). Obsah jen z ověřených faktů: `[DOBA ODPOVĚDI]`, `[DÉLKA ÚVODNÍHO HOVORU]`, „Nezávazně“. Neověřené body nezobrazuj.
 - **Vpravo:** formulář na podkladu `paper-deep`, s ukazatelem vyplnění „Vyplněno 3/6“ (počítají se jen povinná pole).
 
 ### Pole

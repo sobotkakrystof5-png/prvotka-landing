@@ -65,7 +65,7 @@ export const site: SiteConfig = {
   domain: "[DOMÉNA]",
   ceo: "Kryštof Sobotka",
   email: "[E-MAIL]",
-  phone: "[TELEFON]",
+  phone: "+420 604 837 333",
   ico: "29977231",
   address: "[MÍSTO PODNIKÁNÍ]",
   showPrice: false,

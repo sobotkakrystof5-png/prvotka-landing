@@ -17,7 +17,7 @@ export interface ShowcaseItem {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function CustomShowcase({ intro, items }: { intro: React.ReactNode; items: ShowcaseItem[] }) {
+export function CustomShowcase({ intro, items }: { intro?: React.ReactNode; items: ShowcaseItem[] }) {
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLLIElement | null)[]>([]);
   const reduce = usePrefersReducedMotion();
@@ -40,7 +40,7 @@ export function CustomShowcase({ intro, items }: { intro: React.ReactNode; items
 
   return (
     <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-      <div className="lg:col-span-5">
+      <div className="hidden lg:col-span-5 lg:block">
         <div className="lg:sticky lg:top-10">
           {intro}
           <div aria-hidden="true" className="mt-12 hidden items-end gap-3 font-mono lg:flex">

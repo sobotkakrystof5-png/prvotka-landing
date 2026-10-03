@@ -48,7 +48,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Výše měsíční správy a zda zobrazit cenu.
 - [ ] Tým, nebo zakladatel sám (`site.hasTeam`).
 - [ ] Podporované účetní programy kromě POHODY.
-- [ ] Kontaktní údaje, e-mail pro poptávky, místo podnikání (§ 435 OZ, ověřit povinnost).
+- [ ] Kontaktní údaje: e-mail pro poptávky, místo podnikání (§ 435 OZ, ověřit povinnost). Telefon doplněn 2026-10-03.
 - [ ] Text ochrany osobních údajů. Blokér Fáze 9, web s živým formulářem bez něj nenasazovat.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
@@ -96,6 +96,54 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-03 – Nový perex sekce Na míru
+- **Co:** Perex `#na-miru` změněn z „Každou aplikaci stavíme pro jednu firmu. Nekupujete krabicový program, na který si musíte zvyknout. Postavíme ho kolem toho, jak u vás s fakturami opravdu pracujete.“ na „Žádný krabicový program, kterému se musíte přizpůsobit. Aplikaci stavíme jen pro vaši kancelář, podle toho, jak u vás s fakturami opravdu pracujete.“
+- **Proč:** Na pokyn zadavatele, původní text byl kostrbatý: „Postavíme ho“ se gramaticky vázalo ke krabicovému programu a „pro jednu firmu“ se nehodilo k nadpisu „pro vaši kancelář“. Zamítnuté varianty: „Nedostanete krabicový program… a nikdo jiný ji mít nebude.“, „Aplikaci nestavíme pro trh, ale pro vaši kancelář…“.
+- **Dopad:** Jen text, žádná nová fakta. Individuální přístup teď nese „jen pro vaši kancelář“.
+- **Soubory:** `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-03 – Animace kroků „Jak spolu postupujeme“
+- **Co:** Kroky v pásu sekce Na míru se při prvním vstupu do viewportu odhalí postupně 1 → 2 → 3 → 4 (vyjetí zdola a zprůhlednění, 0,6 s mezi kroky). Šipka mezi kroky se dokreslí zleva k dalšímu kroku. Nová klientská komponenta `ProcessSteps.tsx` nad `useOneShotTimeline`.
+- **Proč:** Na pokyn zadavatele: lehké animace „za prvé, za druhé, za třetí, za čtvrté“.
+- **Dopad:** Jeden běh, cca 2,5 s, pak klid, bez tlačítka „Přehrát znovu“. Server, vypnutý JavaScript a `prefers-reduced-motion` vykreslí všechny kroky hned. Po hydrataci se kroky schovají bez přechodu, teprve pak čekají na viewport. Jen třídy Tailwindu, žádné inline styly, CSP beze změny. Ověřeno v Playwrightu (průběh, reduced motion, bez chyb v konzoli).
+- **Soubory:** `src/components/sections/ProcessSteps.tsx`, `src/components/sections/Custom.tsx`, `memory/memory.md`
+
+### 2026-10-03 – Zvýrazněný postup „Jak spolu postupujeme“ v sekci Na míru
+- **Co:** Čtyři kroky spolupráce přesunuté z přilepeného levého sloupce do samostatného pásu přes celou šířku hned pod nadpisem a perexem. Pás jako list papíru (`bg-sheet`, stín, akcentní horní linka), velké serifové číslice v akcentu propojené šipkami (od 1024 px), každý krok má jednoslovný titulek (Rozbor, Nastavení, Zkouška, Předání) a původní větu. Na mobilu číslo vlevo vedle textu, od 640 px 2 × 2, od 1024 px 4 vedle sebe. Nadpis a perex sekce jsou nově vedle sebe nad pásem. V přilepeném sloupci zůstalo tlačítko „Domluvit hovor“ a počítadlo 01 / 05, na mobilu je tlačítko pod body.
+- **Proč:** Na pokyn zadavatele: postup má být výrazný a pochopitelný na první pohled. V přilepeném sloupci zvětšit nešel, sloupec už byl skoro na výšku okna.
+- **Dopad:** `cs.custom.steps` je pole objektů `{ title, text }`. Titulky kroků jsou odvozené z textu zadavatele, žádná nová fakta. Levý sloupec `CustomShowcase` je pod 1024 px skrytý a `intro` je volitelné. Ověřeno 360, 768 a 1440 px bez vodorovného posunu a bez chyb v konzoli.
+- **Soubory:** `src/components/sections/Custom.tsx`, `src/components/sections/CustomShowcase.tsx`, `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-03 – Nový nadpis sekce Na míru
+- **Co:** Nadpis `#na-miru` změněn z „Aplikace postavená pro vaši kancelář, ne pro všechny“ na „Aplikace navržená přesně pro *vaši kancelář*“. Perex beze změny, individuální přístup nese věta „Každou aplikaci stavíme pro jednu firmu“.
+- **Proč:** Na pokyn zadavatele. Zamítnuté varianty: „Vaše kancelář. Vaše procesy. Vaše aplikace.“ (šablonovitá trojice), „Pro každou kancelář tvoříme řešení na míru.“ (generická fráze), „…pro váš byznys/firmu“ (stránka cílí na kanceláře, „firma“ by se pletla s jejich klienty).
+- **Dopad:** Jen text. Nadpis bez tečky jako většina nadpisů sekcí.
+- **Soubory:** `src/content/cs.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-03 – Úprava věty příběhu v „Proč to řešit“
+- **Co:** Věta nad nadpisem sekce „Proč to řešit“ zní nově „Když jsme rozjížděli Alteno, obvolávali jsme účetní kvůli novým zakázkám. Všichni řešili to samé.“
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Jen text. Formulace „všichni“ je tvrzení zadavatele. Příběh v sekci O mně („Skoro v každé jsem narazil…“) zůstal beze změny.
+- **Soubory:** `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-03 – Odstraněn perex sekce Kontakt
+- **Co:** Odstavec pod nadpisem sekce Kontakt („Na tomhle projektu mě nejvíc baví…“) smazán z obsahu i z komponenty, pod nadpisem rovnou následují kontaktní údaje a formulář.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Sekce Kontakt nemá úvodní text. Slib „na rovinu řeknu, jestli se to vyplatí“ teď na stránce zůstává jen v bodu „Co můžete čekat“ (Nezávazně. Když pro vás aplikace nedává smysl, řeknu vám to.).
+- **Soubory:** `src/content/cs.ts`, `src/components/sections/Contact.tsx`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-03 – Nový nadpis a perex sekce Kontakt
+- **Co:** Nadpis „Projdeme spolu, jestli se vám to vyplatí“ nahrazen „Postavím aplikaci přesně pro vaši kancelář“. Perex v první osobě ukazuje zaujetí projektem: každá kancelář je jiná, aplikace se staví kolem jejího provozu a před předáním se testuje na jejích reálných fakturách. Slib „na rovinu řeknu, jestli se to vyplatí“ zůstal na konci.
+- **Proč:** Na pokyn zadavatele, původní verze byla „strašně povrchní“ a chtěl víc nadšení do projektu samotného.
+- **Dopad:** Jen texty sekce Kontakt. Žádná nová fakta, test na reálných fakturách je už v FAQ „Co je v ceně“. Účetní programy perex záměrně nezmiňuje, ověřená je jen POHODA.
+- **Soubory:** `src/content/cs.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-03 – Telefon +420 604 837 333
+- **Co:** `site.phone` v `src/config/site.ts` změněn z placeholderu `[TELEFON]` na `+420 604 837 333`.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Telefon se zobrazuje v sekci Kontakt jako odkaz `tel:+420604837333`. Patička ani JSON-LD telefon nečtou. Repo je veřejné, číslo je tedy veřejné i v kódu.
+- **Soubory:** `src/config/site.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
 
 ### 2026-10-03 – Přestavba grafu kalkulačky a nelineární posuvník faktur
 - **Co:** Graf místo jedné vlnité čáry kumulativní úspory ukazuje dvě kumulativní čáry nákladu (ruční přepis dnes, kontrola s aplikací), plocha mezi nimi je úspora s popiskem „ušetříte“. Nad grafem výkaz pro vybraný měsíc (dnes / s aplikací / ušetříte), měsíc se vybírá myší, dotykem i klávesnicí (`role="slider"`, šipky, Home/End, PageUp/Down). Při změně vstupů čáry plynule přejdou (350 ms, při omezených animacích hned). Osa Y má hysterezi (přepočet až při přetečení nebo poklesu pod třetinu), takže víc faktur = viditelně vyšší čáry, dřív se osa přeškálovala a obrázek zůstal stejný. Rovné čáry místo „načrtnutých“. Osa má jednotku Kč a kulaté dílky, miliony s desetinným místem. Při `showPrice` se k čáře s aplikací přičte cena a správa a návratnost je průsečík. Posuvník faktur je nelineární (`INVOICE_STOPS` v `savings.ts`: do 300 po 10, do 1 000 po 25, dál po 100) s popisky 300 a 1 000 na skutečné pozici. Levá karta kalkulačky už se nenatahuje na výšku pravého sloupce (`lg:self-start`).

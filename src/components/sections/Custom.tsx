@@ -4,11 +4,12 @@ import { ContactLink } from "@/components/layout/ContactLink";
 import { RichText } from "@/components/motifs/RichText";
 import { SampleBadge } from "@/components/motifs/SampleBadge";
 import { CustomShowcase, type ShowcaseItem } from "./CustomShowcase";
+import { ProcessSteps } from "./ProcessSteps";
 import { AccessDemo, FeeDemo, FormatsDemo, MappingDemo, ProgramDemo } from "./CustomDemos";
 
 /**
  * (06) Postaveno pro vaši firmu. Individuální přístup: postup ve čtyřech
- * krocích a pět bodů z briefu
+ * krocích (zvýrazněný pás přes celou šířku pod nadpisem) a pět bodů z briefu
  * („Proč na míru“), každý s malou živou ukázkou. Bod o datech se přidá
  * jen při rozhodnutém `site.dataStaysOnPremise`.
  */
@@ -64,31 +65,30 @@ export function Custom() {
 
   return (
     <Section id="na-miru" spacing="pt-20 pb-24 lg:pt-32 lg:pb-32" className="border-t-[3px] border-double border-rule">
+      <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+        <SectionTitle id="na-miru" className="max-w-[15ch] lg:col-span-5">
+          <RichText text={custom.title} />
+        </SectionTitle>
+        <p className="type-lead max-w-[46ch] lg:col-span-7">{custom.lead}</p>
+      </div>
+
+      {/* Postup spolupráce: samostatný pás přes celou šířku, čitelný na první pohled. */}
+      <div className="mt-12 mb-16 rounded-sm border border-rule border-t-[3px] border-t-accent bg-sheet p-6 shadow-paper sm:p-8 lg:mt-14 lg:mb-20 lg:p-10">
+        <h3 className="type-h3">{custom.stepsTitle}</h3>
+        <ProcessSteps />
+      </div>
+
       <CustomShowcase
         intro={
-          <>
-            <SectionTitle id="na-miru" className="max-w-[15ch]">
-              <RichText text={custom.title} />
-            </SectionTitle>
-            <p className="type-lead mt-6 max-w-[40ch]">{custom.lead}</p>
-            <div className="mt-8 max-w-[40ch]">
-              <p className="type-label text-ink">{custom.stepsTitle}</p>
-              <ol className="mt-3 border-t border-rule">
-                {custom.steps.map((step, index) => (
-                  <li key={step} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2 border-b border-rule py-2.5">
-                    <span className="pt-0.5 font-mono text-[0.78rem] text-accent tabular">{index + 1}</span>
-                    <span className="text-[1rem] leading-snug">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <ContactLink variant="outline" className="mt-8">
-              {cs.cta}
-            </ContactLink>
-          </>
+          <ContactLink variant="outline" className="hidden lg:inline-flex">
+            {cs.cta}
+          </ContactLink>
         }
         items={items}
       />
+      <ContactLink variant="outline" className="mt-4 lg:hidden">
+        {cs.cta}
+      </ContactLink>
     </Section>
   );
 }
