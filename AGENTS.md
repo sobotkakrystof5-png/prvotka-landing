@@ -44,7 +44,7 @@ Blok „This is NOT the Next.js you know“ nahoře vkládá `next dev`. Nemazat
 | Build | `npm run build` (musí projít bez chyb i varování) |
 | Produkční server lokálně | `npm run start` |
 | Lint | `npm run lint` |
-| Typová kontrola | `npm run typecheck` (`tsc --noEmit`) |
+| Typová kontrola | `npm run typecheck` (`next typegen && tsc --noEmit`, typegen kvůli globálním typům `LayoutProps`/`PageProps` v čistém prostředí) |
 | Testy | `npm test` (Vitest: výpočet úspor, schéma formuláře, Server Action, časová osa workflow) |
 | Bezpečnost závislostí | `npm audit --omit=dev --audit-level=high` |
 | Kontrola živého webu | `.claude/security/security-check.sh <URL>` |

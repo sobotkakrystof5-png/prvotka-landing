@@ -96,6 +96,12 @@ Aby to další session „neopravovala“ jako chybu.
 
 Nejnovější nahoře.
 
+### 2026-10-03 – Oprava CI: typecheck a audit závislostí
+- **Co:** Skript `typecheck` nově spouští nejdřív `next typegen` (v CI chyběl generovaný typ `LayoutProps`). `shadcn` přesunut z `dependencies` do `devDependencies`, protože jde o CLI a jeho tranzitivní zranitelnost (`braces`) shazovala `npm audit --omit=dev`.
+- **Proč:** první běh workflow `security` na GitHubu selhal ve dvou jobech.
+- **Dopad:** bezpečnost (AUDIT-LOG). Runtime ani build se nemění, `@import "shadcn/tailwind.css"` se při buildu dál načte, protože dev závislosti se při buildu instalují.
+- **Soubory:** `package.json`, `package-lock.json`, `.claude/security/AUDIT-LOG.md`, `AGENTS.md`
+
 ### 2026-10-03 – Nahrání projektu na veřejný GitHub
 - **Co:** Vytvořen první commit celého projektu a veřejné repo `sobotkakrystof5-png/prvotka-landing` (větev `main`, remote `origin`).
 - **Proč:** na pokyn zadavatele.
