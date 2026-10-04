@@ -96,6 +96,12 @@ Aby to další session „neopravovala“ jako chybu.
 
 Nejnovější nahoře.
 
+### 2026-10-04 – Commit, push a nasazení na Vercel
+- **Co:** Commit `e1bcba7` (e-mail `krystof@prvotka.cz`, `security.txt`, `.env.example`, paměť) pushnutý na `main` do GitHubu. Push spustil automatické produkční nasazení projektu `prvotka-landing`, stav READY na `prvotka-landing.vercel.app`. Před commitem prošly lint, typy, 41 testů a build.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Web je veřejně dostupný na `.vercel.app` adrese, vlastní doména `prvotka.cz` k projektu připojená není. Nasazeno s `/styleguide` (noindex, zakázáno v robots.txt) a právními stránkami jen s placeholderem. Odeslání ostrého formuláře z nasazené verze zatím neověřeno.
+- **Soubory:** `memory/memory.md`
+
 ### 2026-10-04 – Odeslání kontaktního formuláře ověřeno lokálně
 - **Co:** Na `npm run dev` odeslán testovací formulář (údaje „TEST s.r.o.“, odpověď na `test@example.com`). Web zobrazil potvrzení, Resend přijal e-mail bez chyby a zadavatel potvrdil, že e-mail přišel. Založen `.env.local` (necommitovaný) s `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` a `CONTACT_TO_EMAIL`.
 - **Proč:** Na pokyn zadavatele, formulář nebyl dosud ověřen end-to-end.
