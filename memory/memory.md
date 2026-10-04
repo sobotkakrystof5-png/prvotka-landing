@@ -7,7 +7,7 @@ Co se skutečně stalo, jaký je stav a proč. Pravidla formátu jsou v `pravidl
 - **Projekt:** landing page produktu Prvotka pro vytěžování faktur (PDF, skeny, fotky → ISDOC/ISDOCX) pro účetní kanceláře.
 - **Fáze:** 2026-10-03 přestavěná sekce Proč to řešit a pořadí sekcí, čeká na schválení zadavatelem (screenshot sekcí 02 a 03). Fáze 1–8 implementované lokálně 2026-10-02 na pokyn „kompletní implementace“ (bez průběžných zastávek po fázích). Čeká na schválení: hlavně design na `/styleguide` (Fáze 2), pak celkový dojem (Fáze 7). Fáze 9 (nasazení) blokují podklady v Otevřených otázkách. Nic není commitnuté ani nasazené.
 - **Stack:** Next.js 16.3.8 (App Router, Turbopack) + React 19 + TypeScript, Tailwind CSS 4, shadcn/ui (Radix), Motion 14, React Hook Form + Zod 4, Resend, Vitest 5, npm. Hosting Vercel Hobby.
-- **Co existuje:** celá landing page (10 sekcí, 9 viditelných), právní stránky jako placeholder, 404, `/styleguide`, OG obrázek, sitemap, robots, JSON-LD, Server Action formuláře, bezpečnostní vrstva a `.claude/security/`, CI workflow. Zadání je `PROJECT-BRIEF.md` (verze 1.1).
+- **Co existuje:** celá landing page (10 sekcí, 9 viditelných), právní stránky s textem čekajícím na schválení, 404, `/styleguide`, OG obrázek, sitemap, robots, JSON-LD, Server Action formuláře, bezpečnostní vrstva a `.claude/security/`, CI workflow. Zadání je `PROJECT-BRIEF.md` (verze 1.1).
 - **Ověřeno lokálně (`next start`, 2026-10-02):** lint, typy, 31 testů, build bez varování. Chromium i WebKit na 360/768/1024/1440 px bez vodorovného scrollu, 0 porušení CSP, 0 chyb v konzoli, i s `prefers-reduced-motion`. Lighthouse mobil: Performance 90–91, Accessibility 100, Best Practices 100, SEO 100, CLS 0. Formulář: validace a chybové stavy fungují, skutečné odeslání e-mailu ověřené až 2026-10-04 (viz changelog).
 
 ## Klíčová rozhodnutí
@@ -49,7 +49,8 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Tým, nebo zakladatel sám (`site.hasTeam`).
 - [ ] Podporované účetní programy kromě POHODY.
 - [ ] Kontaktní údaje: telefon a e-mail na webu (`krystof@prvotka.cz`) doplněné 2026-10-03/04. Schránka musí existovat a `CONTACT_TO_EMAIL` ve Vercelu se nastavuje zvlášť.
-- [ ] Text ochrany osobních údajů. Blokér Fáze 9, web s živým formulářem bez něj nenasazovat.
+- [ ] Ochrana osobních údajů: text je na webu (2026-10-04), čeká na schválení zadavatelem. Potvrdit: lhůty 6 měsíců / 3 roky (převzaté z Vizeonu), předání do USA přes standardní smluvní doložky a DPA u Vercelu a Resendu, „Web a aplikaci Prvotka provozuji pod svým jménem“. Rozhodnout zaškrtávátko ve formuláři: text stojí na čl. 6 odst. 1 písm. b) a f), checkbox ale říká „Souhlasím se zpracováním“ (souhlas = písm. a). Doporučení: přepsat na „Beru na vědomí, jak zpracovávám osobní údaje“. Po schválení zrušit `noindex` a přidat do sitemapy.
+- [ ] Obchodní podmínky: text je na webu (2026-10-04), čeká na schválení. Doplnit placeholdery: datum účinnosti, výpovědní doba správy, co se stane s aplikací a daty po skončení správy (stejná odpověď patří do nepublikované FAQ „Můžeme skončit?“). Potvrdit hodnoty převzaté z Vizeonu: záloha 30 % / doplatek 70 %, splatnost 14 dní, platnost nabídky 14 dní, záruka 14 dní, reklamace do 30 pracovních dní, licence nevýhradní a zdrojový kód zůstává poskytovateli. Potvrdit nové body: jen pro podnikatele, ne spotřebitele; předání = import souboru z reálných faktur projde; strop náhrady škody ve výši ceny zakázky; zpracovatelská smlouva podle čl. 28 GDPR (zatím neexistuje, je potřeba ji připravit). Doporučení: text nechat zkontrolovat právníkem. Po schválení zrušit `noindex` a přidat do sitemapy.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
 - [ ] Lighthouse ověřit na náhledovém nasazení Vercel (lokálně Performance 90–91 při gzip a simulovaném 4G, těsně nad hranicí).
@@ -88,13 +89,32 @@ Aby to další session „neopravovala“ jako chybu.
 - **Odpovědi FAQ jsou v HTML i zavřené** (`forceMount`, skryté přes `data-state=closed`). Kvůli SEO.
 - **Čísla sekcí „(02)“ jsou v levém okraji jako čísla řádků účetní knihy, ne jako štítek nad nadpisem.** Na mobilu nad nadpisem.
 - **`/styleguide` zůstává do Fáze 9.** Má `noindex` a zákaz v robots.txt. Před nasazením odstranit.
-- **Právní stránky mají `noindex` a nejsou v sitemapě,** dokud obsahují jen placeholder.
+- **Právní stránky mají `noindex` a nejsou v sitemapě,** dokud obsahují neschválený text (obě stránky od 2026-10-04).
+- **Ochrana osobních údajů nemá cookie lištu ani zmínku o souhlasu s cookies.** Web žádné cookies ani analytiku nepoužívá (ověřeno 2026-10-04). Při přidání analytiky upravit oddíl 9 a doplnit lištu.
 - **IČO v ukázkách záměrně nemají platný kontrolní součet a účty mají kód banky 0000.** Nemůžou kolidovat se skutečnou firmou.
 - **`security.txt` má placeholder v `Canonical`.** Není platný, dokud zadavatel nezaregistruje doménu (STATE.md).
 
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-04 – Obchodní podmínky: kde aplikace běží
+- **Co:** Oddíl Provoz a správa má místo placeholderu `[KDE APLIKACE BĚŽÍ]` dvě varianty: na hostingu klienta (provoz odpovídá klient, zásahy podle hodinové sazby) nebo u poskytovatele se sjednanou měsíční správou. Varianta je v nabídce.
+- **Proč:** Rozhodnutí zadavatele.
+- **Dopad:** Netýká se `dataStaysOnPremise`. I na hostingu klienta může vytěžování běžet přes cloudové AI, slib o datech dál chybí. Ověřeno: typy, vykreslení na dev serveru.
+- **Soubory:** `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-04 – Text obchodních podmínek
+- **Co:** Stránka `/obchodni-podminky` má místo placeholderu text v 15 oddílech. Předlohou byly obchodní podmínky Vizeonu od zadavatele, upravené pro produkt: smluvní stranou je OSVČ, jen podnikatelé, rozsah podle publikované FAQ „Co je v ceně?“, import provádí klient, předání a kontrola výstupů (odpovědnost za účetní údaje nese klient, podle briefu), omezení náhrady škody, osobní údaje ve fakturách klienta (role zpracovatele, čl. 28 GDPR, mlčenlivost). Proti Vizeonu změněno: zveřejnění klienta v portfoliu jen s písemným souhlasem (Vizeon má opt-out, kolidovalo by s pravidlem pro případovou studii), oddíl o hostingu nahrazený oddílem Provoz a správa s placeholdery, bez ceny a výše správy (`showPrice: false`), vypuštěné datum účinnosti čl. 9 a přechodné ustanovení. `LegalPage` vykreslí placeholder i v řádku s datem.
+- **Proč:** Na pokyn zadavatele. Odchylka od briefu (část 11, „právní texty negeneruj“): předlohu dodal zadavatel.
+- **Dopad:** `noindex` zůstává. Otevřená otázka s placeholdery a body k potvrzení. Ověřeno: typy, lint, 42 testů, vykreslení na dev serveru (15 oddílů, 5 viditelných placeholderů). Responzivitu v prohlížeči jsem neověřoval, používá stejnou komponentu jako ochrana osobních údajů.
+- **Soubory:** `src/content/cs.ts`, `src/components/layout/LegalPage.tsx`, `src/app/obchodni-podminky/page.tsx`, `memory/memory.md`
+
+### 2026-10-04 – Text ochrany osobních údajů
+- **Co:** Stránka `/ochrana-osobnich-udaju` má místo placeholderu text v 10 oddílech (správce, údaje, účel, právní základ, doba uchování, příjemci, práva, uplatnění, cookies, změny). Předlohou byl text Vizeonu od zadavatele, upravený podle skutečnosti: údaje z formuláře včetně firmy, počtu faktur a programu, technické logy hostingu, poptávky se na webu neukládají, bez cookies a cookie lišty, Vercel a Resend jako zpracovatelé z USA, schránka jako kategorie příjemce. Lhůta pro vyřízení žádosti opravena podle čl. 12 odst. 3 GDPR (1 měsíc + 2 měsíce místo 30 + 60 dnů). `LegalPage` umí volitelný obsah (číslované oddíly na linkách, e-mail a uoou.cz jako odkazy), obchodní podmínky zůstávají placeholder.
+- **Proč:** Na pokyn zadavatele. Odchylka od briefu (část 11, „právní texty negeneruj“): text dodal zadavatel jako předlohu.
+- **Dopad:** Blokér Fáze 9 je obsahově vyřešený, čeká na schválení a rozhodnutí o checkboxu (Otevřené otázky). `noindex` zůstává. Ověřeno: typy, lint, 42 testů, build, Chromium + WebKit 360/768/1440 px bez vodorovného scrollu a bez chyb v konzoli. Znak § je v podmnožině písma (Latin-1).
+- **Soubory:** `src/content/cs.ts`, `src/components/layout/LegalPage.tsx`, `src/app/ochrana-osobnich-udaju/page.tsx`, `memory/memory.md`
 
 ### 2026-10-04 – Z placeholderu videa odstraněn štítek „[VIDEO 2 MIN]“
 - **Co:** V sekci „Kdo za tím stojí“ zůstal v rámečku videa jen text „Video připravujeme“, štítek `[VIDEO 2 MIN]` zmizel včetně klíče `tag` v `cs.ts`.

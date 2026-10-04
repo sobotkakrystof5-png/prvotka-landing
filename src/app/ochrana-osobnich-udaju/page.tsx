@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   title: cs.legal.privacy.title,
   description: cs.legal.privacy.description,
   alternates: { canonical: "/ochrana-osobnich-udaju" },
-  // Dokud je tu jen placeholder, stránka se neindexuje.
+  // Dokud zadavatel text neschválí, stránka se neindexuje.
   robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {
-  return <LegalPage title={cs.legal.privacy.title} />;
+  return <LegalPage title={cs.legal.privacy.title} content={cs.legal.privacy} />;
 }

@@ -852,10 +852,257 @@ const raw = {
     privacy: {
       title: "Ochrana osobních údajů",
       description: "Informace o zpracování osobních údajů z kontaktního formuláře.",
+      updated: "Poslední úprava 4. 10. 2026",
+      basis: "Podle nařízení EU 2016/679 (GDPR) a zákona č. 110/2019 Sb., o zpracování osobních údajů.",
+      intro:
+        "Když mi napíšete přes kontaktní formulář, dostanu od vás pár osobních údajů. Tady je přehledně, co s nimi dělám, jak dlouho je mám a jaká máte práva.",
+      // Blok: řetězec = odstavec, pole = odrážkový seznam.
+      sections: [
+        {
+          heading: "Kdo údaje zpracovává",
+          blocks: [
+            "Správcem osobních údajů jsem já, fyzická osoba podnikající:",
+            [`${site.ceo}, IČO ${site.ico}`, `E-mail: ${site.email}`, `Telefon: ${site.phone}`],
+            `Web a aplikaci ${site.name} provozuji pod svým jménem.`,
+          ],
+        },
+        {
+          heading: "Jaké údaje zpracovávám",
+          blocks: [
+            "Z kontaktního formuláře dostávám jen to, co sami vyplníte:",
+            [
+              "jméno a příjmení,",
+              "název firmy nebo kanceláře,",
+              "e-mail a telefon,",
+              "přibližný počet faktur za měsíc a účetní program, který používáte,",
+              "text zprávy, pokud ji napíšete.",
+            ],
+            "Hosting webu u každého požadavku zaznamenává technické údaje, například IP adresu a čas. Slouží k provozu webu a k jeho ochraně před zneužitím.",
+            "Nesbírám citlivé údaje ve smyslu čl. 9 GDPR. Neprovádím automatizované rozhodování ani profilování.",
+          ],
+        },
+        {
+          heading: "Proč je zpracovávám",
+          blocks: [
+            [
+              "abych odpověděl na vaši poptávku a domluvil s vámi hovor,",
+              "abych s vámi jednal o případné zakázce a připravil nabídku,",
+              "abych plnil smlouvu, pokud ji spolu uzavřeme.",
+            ],
+            "Údaje nepoužívám k marketingu a nikomu je neprodávám.",
+          ],
+        },
+        {
+          heading: "Na jakém právním základě",
+          blocks: [
+            [
+              "Čl. 6 odst. 1 písm. b) GDPR: jednání o smlouvě na vaši žádost a její plnění.",
+              "Čl. 6 odst. 1 písm. f) GDPR: můj oprávněný zájem na evidenci obchodní komunikace pro případ sporu a na ochraně webu před zneužitím.",
+            ],
+          ],
+        },
+        {
+          heading: "Jak dlouho je uchovávám",
+          blocks: [
+            [
+              "Když spolupráce nevznikne, nejdéle 6 měsíců od přijetí poptávky.",
+              "Když spolupráci uzavřeme, po dobu jejího trvání a potom ještě 3 roky kvůli obecné promlčecí lhůtě podle § 629 občanského zákoníku.",
+            ],
+            "Web poptávky nikam neukládá. Zpráva z formuláře mi přijde e-mailem a dál s ní pracuji ve své e-mailové schránce.",
+          ],
+        },
+        {
+          heading: "Kdo se k údajům dostane",
+          blocks: [
+            "Údaje nepředávám nikomu dalšímu. Pracují s nimi jen poskytovatelé služeb, přes které web a e-mail běží. Jsou v roli zpracovatelů:",
+            [
+              "Vercel: hosting webu,",
+              "Resend: doručení zprávy z formuláře do mé schránky,",
+              "poskytovatel mé e-mailové schránky: uložení pošty.",
+            ],
+            "Vercel a Resend jsou společnosti z USA, údaje se proto mohou dostat i mimo EU. Předání je zajištěné standardními smluvními doložkami schválenými Evropskou komisí.",
+          ],
+        },
+        {
+          heading: "Jaká máte práva",
+          blocks: [
+            [
+              "Právo na přístup (čl. 15): zeptat se, jestli vaše údaje zpracovávám, a dostat jejich kopii.",
+              "Právo na opravu (čl. 16): nechat opravit nepřesné nebo doplnit neúplné údaje.",
+              "Právo na výmaz (čl. 17): požádat o smazání údajů za podmínek, které stanoví GDPR.",
+              "Právo na omezení zpracování (čl. 18): požádat, abych údaje dočasně jen uchovával a dál s nimi nepracoval.",
+              "Právo na přenositelnost (čl. 20): dostat údaje ve strojově čitelném formátu.",
+              "Právo vznést námitku (čl. 21) proti zpracování na základě oprávněného zájmu.",
+              "Právo podat stížnost u Úřadu pro ochranu osobních údajů, Pplk. Sochora 27, 170 00 Praha 7, www.uoou.cz.",
+            ],
+          ],
+        },
+        {
+          heading: "Jak práva uplatnit",
+          blocks: [
+            `Stačí napsat na ${site.email}. Odpovím bez zbytečného odkladu, nejpozději do jednoho měsíce. Ve výjimečných případech lze lhůtu prodloužit o další dva měsíce. O prodloužení vám dám vědět.`,
+          ],
+        },
+        {
+          heading: "Cookies a analytika",
+          blocks: [
+            "Web nepoužívá cookies, analytiku ani měřicí kódy třetích stran. Proto tu nenajdete ani cookie lištu.",
+          ],
+        },
+        {
+          heading: "Změny této stránky",
+          blocks: [
+            "Když se způsob zpracování změní, upravím tuto stránku a datum poslední úpravy nahoře. Platí vždy verze zveřejněná zde.",
+          ],
+        },
+      ],
     },
     terms: {
       title: "Obchodní podmínky",
       description: "Obchodní podmínky pro dodání aplikace na míru.",
+      updated: "Platné od [DATUM ÚČINNOSTI]",
+      basis: "Podle zákona č. 89/2012 Sb., občanský zákoník. Pro smlouvy mezi podnikateli.",
+      intro:
+        "Tyto podmínky upravují, jak spolu spolupracujeme od nabídky přes dodání aplikace až po její správu. Co je v nich napsané, platí, pokud si v nabídce nebo ve smlouvě nedomluvíme něco jiného.",
+      // Blok: řetězec = odstavec, pole = odrážkový seznam.
+      sections: [
+        {
+          heading: "Kdo je poskytovatel",
+          blocks: [
+            "Poskytovatelem jsem já, fyzická osoba podnikající:",
+            [
+              `${site.ceo}, IČO ${site.ico}, nejsem plátce DPH`,
+              `E-mail: ${site.email}`,
+              `Telefon: ${site.phone}`,
+              `Web: ${site.domain}`,
+            ],
+            `${site.name} je název produktu, ne samostatná firma. Smluvní stranou jsem vždy já.`,
+          ],
+        },
+        {
+          heading: "Pro koho podmínky platí",
+          blocks: [
+            "Klientem je podnikatel, typicky účetní kancelář nebo firma s vlastní účtárnou. Se spotřebiteli smlouvy neuzavírám.",
+            "Individuální dohoda v nabídce nebo ve smlouvě má před těmito podmínkami přednost.",
+          ],
+        },
+        {
+          heading: "Co dodávám",
+          blocks: [
+            "Aplikaci na míru, která z faktur v PDF, skenech a fotkách vyčte údaje, zkontroluje součty a DPH a připraví soubor ISDOC nebo ISDOCX pro import do účetního programu. Součástí dodávky je nasazení na server, test na reálných fakturách klienta a zaškolení.",
+            "Import do účetního programu provádí klient. Aplikace sama do účetnictví nic nezapisuje.",
+            "Přesný rozsah, podporovaný účetní program a cena jsou vždy v nabídce pro konkrétního klienta. Pokud aplikace k vytěžování údajů používá službu třetí strany, nabídka ji uvádí.",
+          ],
+        },
+        {
+          heading: "Jak vzniká smlouva",
+          blocks: [
+            [
+              "Klient se ozve přes kontaktní formulář nebo e-mailem a domluvíme si hovor.",
+              "Připravím nabídku a pošlu ji e-mailem.",
+              "Smlouva vzniká, když klient nabídku e-mailem potvrdí a zaplatí zálohu podle oddílu 5.",
+            ],
+            "Nabídka platí 14 dní od odeslání, pokud v ní není uvedeno jinak.",
+          ],
+        },
+        {
+          heading: "Cena a platba",
+          blocks: [
+            "Nejsem plátce DPH, k ceně se proto DPH nepřipočítává. Cena je splatná ve dvou částech:",
+            [
+              "záloha 30 % ceny před zahájením prací na základě zálohové faktury. Pracovat začínám po připsání zálohy na účet,",
+              "doplatek 70 % ceny po předání aplikace na základě konečné faktury se splatností 14 dní.",
+            ],
+            "Platí se bankovním převodem, platební údaje jsou na faktuře.",
+            "Když je klient s platbou v prodlení, můžu do úplného zaplacení pozastavit práce i správu.",
+          ],
+        },
+        {
+          heading: "Termíny a součinnost",
+          blocks: [
+            "Závazný termín dodání je v nabídce nebo v e-mailové dohodě.",
+            "Aplikaci stavím na fakturách a účetním programu klienta. Klient proto poskytne vzorové faktury, informace o tom, jak importuje doklady, a zpětnou vazbu během testu. Po dobu, kdy na podklady čekám, se termín dodání posouvá. Na čekání upozorním e-mailem.",
+          ],
+        },
+        {
+          heading: "Předání a kontrola výstupů",
+          blocks: [
+            "Aplikace je předaná, když na reálných fakturách klienta vytvoří soubor, který jde naimportovat do jeho účetního programu.",
+            "Vytěžování údajů z PDF, skenů a fotek nikdy není bezchybné a výsledek závisí i na čitelnosti dokladu. Aplikace kontroluje součty a DPH a upozorní na podezřelé hodnoty. Výstup ale před importem vždy kontroluje klient a odpovědnost za správnost údajů v účetnictví nese klient.",
+          ],
+        },
+        {
+          heading: "Odpovědnost za škodu",
+          blocks: [
+            "Neodpovídám za škodu, která vznikne z údajů, jež klient před importem nezkontroloval, ani za škodu způsobenou výpadkem nebo změnou účetního programu, hostingu nebo jiné služby třetí strany.",
+            "Celková náhrada škody je omezená cenou zakázky. Omezení neplatí pro újmu způsobenou úmyslně nebo z hrubé nedbalosti.",
+          ],
+        },
+        {
+          heading: "Licence a zdrojový kód",
+          blocks: [
+            "Aplikace je autorské dílo podle zákona č. 121/2000 Sb.",
+            [
+              "Po úplném zaplacení ceny dostane klient nevýhradní licenci k užívání aplikace pro vlastní potřebu v rozsahu podle nabídky.",
+              "Zdrojový kód zůstává můj, pokud se písemně nedohodneme na jeho převodu.",
+              "Licenci nelze bez mého písemného souhlasu postoupit třetí osobě.",
+              "Jméno klienta ani spolupráci s ním bez jeho písemného souhlasu nezveřejňuji.",
+            ],
+          ],
+        },
+        {
+          heading: "Záruka a reklamace",
+          blocks: [
+            "Na chyby aplikace, které vzniknou na mé straně, dávám záruku 14 dní od předání. Záruční opravy jsou zdarma.",
+            "Záruka se nevztahuje na chyby způsobené úpravou aplikace klientem nebo třetí stranou, aktualizací účetního programu, změnou formátu ISDOC, změnou hostingu nebo služby třetí strany ani na nečitelné doklady.",
+            `Reklamaci pošlete na ${site.email} s popisem chyby, ideálně i s fakturou, na které se objevila. Vyřídím ji do 30 pracovních dní od přijetí.`,
+          ],
+        },
+        {
+          heading: "Provoz a správa",
+          blocks: [
+            "Kde aplikace poběží, je v nabídce. Možnosti jsou dvě:",
+            [
+              "Na hostingu klienta: aplikaci nasadím na server nebo hosting klienta a předám ji. Za provoz a dostupnost pak odpovídá klient. Zásahy na jeho žádost účtuji podle hodinové sazby uvedené v nabídce.",
+              "U mě se správou: aplikace běží na hostingu, který zajišťuji já, a klient platí měsíční správu podle nabídky. Hlídám provoz a zasáhnu při výpadku nebo chybě. Nové funkce a úpravy nad rámec dohody se účtují zvlášť.",
+            ],
+            "Správa se sjednává na dobu neurčitou. Klient ji může vypovědět e-mailem s výpovědní dobou [VÝPOVĚDNÍ DOBA]. Po skončení správy [CO SE STANE S APLIKACÍ A DATY].",
+          ],
+        },
+        {
+          heading: "Osobní údaje ve fakturách",
+          blocks: [
+            "Faktury klienta můžou obsahovat osobní údaje, například jména podnikajících fyzických osob. Pokud se k nim při dodání nebo správě aplikace dostanu, zpracovávám je pro klienta jako zpracovatel a jen v rozsahu nutném pro dodání a správu.",
+            "Podmínky zpracování upravuje zpracovatelská smlouva podle čl. 28 GDPR, kterou uzavřeme spolu se smlouvou.",
+            "O všem, co se z faktur a z účetnictví klienta dozvím, zachovávám mlčenlivost i po skončení spolupráce.",
+          ],
+        },
+        {
+          heading: "Odstoupení od smlouvy",
+          blocks: [
+            "Kterákoli strana může od smlouvy odstoupit písemně, stačí e-mail:",
+            [
+              "Klient před zahájením prací: zálohu vrátím v plné výši do 14 dní.",
+              "Klient po zahájení prací: záloha se nevrací, hradí už odvedenou práci.",
+              "Já: při závažném porušení povinností klientem, například při opakovaném neposkytnutí součinnosti nebo prodlení s platbou delším než 30 dní. Vyúčtuji pak poměrnou část ceny za odvedenou práci.",
+            ],
+          ],
+        },
+        {
+          heading: "Řešení sporů",
+          blocks: [
+            "Případný spor chceme vyřešit nejdřív dohodou, přímým jednáním nebo mimosoudní mediací.",
+            "Když se nedohodneme, rozhoduje obecný soud příslušný podle mého místa podnikání. Rozhodným právem je právo České republiky.",
+          ],
+        },
+        {
+          heading: "Závěrečná ustanovení",
+          blocks: [
+            "Podmínky můžu změnit. Změna platí od zveřejnění nové verze na tomto webu. Na smlouvy uzavřené dřív se vztahuje znění platné v době jejich uzavření.",
+            "Když je některé ustanovení neplatné nebo nevymahatelné, ostatní ustanovení platí dál.",
+          ],
+        },
+      ],
     },
   },
 
