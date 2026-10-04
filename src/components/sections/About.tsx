@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { site } from "@/config/site";
 import { cs } from "@/content/cs";
 import { Section, SectionTitle } from "@/components/layout/Section";
@@ -8,7 +9,7 @@ import { VideoPlayer } from "./VideoPlayer";
 /**
  * (08) Kdo za tím stojí. Stránka vedená zakladatelem (princip Ben AI):
  * fotka, příběh v první osobě, video a pás vlastních značek.
- * Fotka i video jsou zatím označené placeholdery s pevným poměrem stran.
+ * Fotka je skutečná, video je zatím označený placeholder s pevným poměrem stran.
  */
 export function About() {
   const { about } = cs;
@@ -17,13 +18,15 @@ export function About() {
       <Section id="kdo-za-tim-stoji" tone="deep" spacing="pt-20 pb-16 lg:pt-28 lg:pb-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
-            {/* Fotka CEO: placeholder s pevným aspect-ratio, žádný layout shift */}
-            <div
-              role="img"
-              aria-label={about.photoAlt}
-              className="ledger relative flex aspect-[4/5] w-full max-w-[22rem] items-end rounded-sm border border-dashed border-field-border bg-paper p-4 [--ledger-step:1.75rem]"
-            >
-              <Placeholder>{about.photoPlaceholder}</Placeholder>
+            {/* Fotka CEO: pevný aspect-ratio, žádný layout shift */}
+            <div className="relative aspect-[4/5] w-full max-w-[22rem] overflow-hidden rounded-sm border border-field-border bg-paper">
+              <Image
+                src="/ceo.jpg"
+                alt={about.photoAlt}
+                fill
+                sizes="(min-width: 1024px) 22rem, (min-width: 640px) 22rem, 90vw"
+                className="object-cover object-top"
+              />
             </div>
             <p className="mt-4 font-heading text-[1.35rem] leading-tight">{site.ceo}</p>
             <p className="type-label mt-1">{about.role}</p>

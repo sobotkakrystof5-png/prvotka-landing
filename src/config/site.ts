@@ -36,8 +36,6 @@ export interface SiteConfig {
   email: string;
   phone: string;
   ico: string;
-  /** Místo podnikání, pravděpodobně povinné podle § 435 OZ (ověřit). */
-  address: string;
   /** Blok s cenou. Vždy s „nejsem plátce DPH“, nikdy „včetně DPH“. */
   showPrice: boolean;
   /** Jednorázová cena v Kč (zadavatel je neplátce DPH). */
@@ -67,7 +65,6 @@ export const site: SiteConfig = {
   email: "krystof@prvotka.cz",
   phone: "+420 604 837 333",
   ico: "29977231",
-  address: "[MÍSTO PODNIKÁNÍ]",
   showPrice: false,
   price: 35000,
   monthlyFee: null, // [VÝŠE SPRÁVY]

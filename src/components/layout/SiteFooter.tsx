@@ -82,7 +82,6 @@ export function SiteFooter() {
       <div className="border-t border-rule">
         <p className="wrap flex flex-wrap gap-x-5 gap-y-1 py-6 font-mono text-[0.78rem] text-ink-muted">
           <span>{site.ceo}</span>
-          <span>{withPlaceholders(site.address)}</span>
           <span>
             {cs.footer.icoPrefix} {withPlaceholders(site.ico)}
           </span>

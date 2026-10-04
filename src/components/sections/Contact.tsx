@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { isPlaceholder, site } from "@/config/site";
 import { cs } from "@/content/cs";
 import { Section, SectionTitle } from "@/components/layout/Section";
@@ -41,12 +42,8 @@ export function Contact() {
 
         <div className="lg:col-span-5 lg:row-start-2">
           <div className="flex items-center gap-4">
-            <div
-              role="img"
-              aria-label={contact.photoAlt}
-              className="flex size-16 shrink-0 items-center justify-center rounded-sm border border-dashed border-field-border bg-paper-deep"
-            >
-              <span className="font-mono text-[0.62rem] text-warn-ink">{contact.photoPlaceholder}</span>
+            <div className="relative size-16 shrink-0 overflow-hidden rounded-sm border border-field-border bg-paper-deep">
+              <Image src="/ceo.jpg" alt={contact.photoAlt} fill sizes="64px" className="object-cover object-top" />
             </div>
             <div>
               <p className="font-heading text-[1.3rem] leading-tight">{site.ceo}</p>

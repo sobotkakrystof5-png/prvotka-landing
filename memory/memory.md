@@ -48,7 +48,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Výše měsíční správy a zda zobrazit cenu.
 - [ ] Tým, nebo zakladatel sám (`site.hasTeam`).
 - [ ] Podporované účetní programy kromě POHODY.
-- [ ] Kontaktní údaje: místo podnikání (§ 435 OZ, ověřit povinnost). Telefon a e-mail na webu (`krystof@prvotka.cz`) doplněné 2026-10-03/04. Schránka musí existovat a `CONTACT_TO_EMAIL` ve Vercelu se nastavuje zvlášť.
+- [ ] Kontaktní údaje: telefon a e-mail na webu (`krystof@prvotka.cz`) doplněné 2026-10-03/04. Schránka musí existovat a `CONTACT_TO_EMAIL` ve Vercelu se nastavuje zvlášť.
 - [ ] Text ochrany osobních údajů. Blokér Fáze 9, web s živým formulářem bez něj nenasazovat.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
@@ -68,6 +68,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 
 Aby to další session „neopravovala“ jako chybu.
 
+- **Místo podnikání na webu není.** Zadavatel nechce adresu zveřejňovat (2026-10-04). Riziko: § 435 OZ pravděpodobně vyžaduje u podnikatele uvádět identifikační údaje včetně místa podnikání, ověřit u právníka nebo účetní. Neobnovovat placeholder, jen případně navrhnout řešení.
 - **Případová studie se nezobrazuje.** Dokud neexistují změřená data a souhlas klienta.
 - **FAQ otázky s `published: false`.** Čekají na odpovědi zadavatele.
 - **Slib o ochraně dat chybí.** Dokud není rozhodnut způsob vytěžování.
@@ -95,6 +96,24 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-04 – Odstraněno „[MÍSTO PODNIKÁNÍ]“
+- **Co:** Pole `address` odstraněno z `site.ts`, z patičky a z věty o provozovateli v právních stránkách. Patička: jméno, IČO, nejsem plátce DPH, rok.
+- **Proč:** Na pokyn zadavatele, místo podnikání na webu nechce uvádět.
+- **Dopad:** Odchylka od `PROJECT-BRIEF.md` (6.11, blokery). Právní riziko § 435 OZ zapsáno do „Záměrně neudělané“.
+- **Soubory:** `src/config/site.ts`, `src/components/layout/SiteFooter.tsx`, `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-04 – Přeformulování věty „Co můžete čekat“ v kontaktu
+- **Co:** `contact.expect.honest` změněno z „Nezávazně. Když pro vás aplikace nedává smysl, řeknu vám to.“ na „Hovor vás k ničemu nezavazuje. Pokud vám aplikace nepomůže, řeknu vám to na rovinu.“
+- **Proč:** Na pokyn zadavatele, původní věta působila kostrbatě.
+- **Dopad:** Jen text, žádná logika ani struktura. Smysl (nezávaznost a poctivost) zůstal.
+- **Soubory:** `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-04 – Fotka CEO místo placeholderu
+- **Co:** Fotka Kryštofa Sobotky (`public/ceo.jpg`, ořez 4:5, 1200×1500, metadata odstraněna) nahradila placeholder v sekci „Kdo za tím stojí“ a malý placeholder „[FOTO]“ u kontaktních údajů. Obě přes `next/image`, alt „Kryštof Sobotka, CEO“. Klíče `photoPlaceholder` z `cs.ts` smazány.
+- **Proč:** Na pokyn zadavatele. Snímek je nezávazný, z kavárny. Doporučil jsem časem vyměnit za čistší portrét, výměna je jen záměna souboru.
+- **Dopad:** CSP beze změny (`img-src 'self'`, optimalizace jde přes `/_next/image`). Video zůstává placeholderem. Lint, typecheck, testy a build prošly.
+- **Soubory:** `public/ceo.jpg`, `src/components/sections/About.tsx`, `src/components/sections/Contact.tsx`, `src/content/cs.ts`
 
 ### 2026-10-04 – Commit, push a nasazení na Vercel
 - **Co:** Commit `e1bcba7` (e-mail `krystof@prvotka.cz`, `security.txt`, `.env.example`, paměť) pushnutý na `main` do GitHubu. Push spustil automatické produkční nasazení projektu `prvotka-landing`, stav READY na `prvotka-landing.vercel.app`. Před commitem prošly lint, typy, 41 testů a build.

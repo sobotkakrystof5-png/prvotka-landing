@@ -150,7 +150,7 @@ Pořadí sekcí (`src/lib/sections.ts`, závazné, změněno 2026-10-03): Úvod,
 - Jeden rádius pro celý web (3 px). Výjimka: kulaté úchyty posuvníku a porty ve workflow.
 - Světlý režim. Tmavý jen po schválení zadavatelem.
 - **Žádný šablonovitý AI vzhled:** žádné fialovomodré gradienty, glassmorphism, mřížky stejných karet, emoji, nepřestylované shadcn/ui.
-- Média: fotka CEO a video zatím nejsou (loga značek Alteno, Vizeon, ZakazIQ jsou v `public/brands/`), místo nich označené placeholdery s pevným `aspect-ratio`. Žádné fotobanky.
+- Média: video zatím není, fotka CEO je v `public/ceo.jpg` (loga značek Alteno, Vizeon, ZakazIQ jsou v `public/brands/`), video je označený placeholder s pevným `aspect-ratio`. Žádné fotobanky.
 
 ---
 

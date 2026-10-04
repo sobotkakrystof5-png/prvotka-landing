@@ -713,8 +713,7 @@ const raw = {
       "Je to hodiny práce, kterou nikdo nechce dělat, a chyba se v ní schová snadno. Ve Vizeonu stavím weby a aplikace na míru, v Alteno automatizuji firemní procesy. Tady obojí spojuju. Každá kancelář dostane aplikaci postavenou pro sebe a s jedním cílem: ušetřit jí čas a peníze.",
     ],
     team: teamLine,
-    photoPlaceholder: "[FOTO CEO]",
-    photoAlt: "Místo pro fotku Kryštofa Sobotky, CEO",
+    photoAlt: "Kryštof Sobotka, CEO",
     video: {
       placeholder: "Video připravujeme",
       tag: "[VIDEO 2 MIN]",
@@ -794,13 +793,12 @@ const raw = {
     emailLabel: "E-mail",
     phoneLabel: "Telefon",
     icoLabel: "IČO",
-    photoAlt: "Místo pro fotku Kryštofa Sobotky",
-    photoPlaceholder: "[FOTO]",
+    photoAlt: "Kryštof Sobotka",
     expect: {
       title: "Co můžete čekat",
       responseTime: (value: string) => `Odpovím do ${value}.`,
       introCall: (value: string) => `Úvodní hovor trvá ${value}.`,
-      honest: "Nezávazně. Když pro vás aplikace nedává smysl, řeknu vám to.",
+      honest: "Hovor vás k ničemu nezavazuje. Pokud vám aplikace nepomůže, řeknu vám to na rovinu.",
     },
     form: {
       title: "Poptávka hovoru",
@@ -852,7 +850,7 @@ const raw = {
   legal: {
     placeholder: "Text doplní zadavatel.",
     back: "Zpět na úvod",
-    operator: `Provozovatel: ${site.ceo}, fyzická osoba podnikající (OSVČ), IČO ${site.ico}, ${site.address}. Nejsem plátce DPH.`,
+    operator: `Provozovatel: ${site.ceo}, fyzická osoba podnikající (OSVČ), IČO ${site.ico}. Nejsem plátce DPH.`,
     privacy: {
       title: "Ochrana osobních údajů",
       description: "Informace o zpracování osobních údajů z kontaktního formuláře.",
