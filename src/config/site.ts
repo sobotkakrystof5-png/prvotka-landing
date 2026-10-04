@@ -72,7 +72,7 @@ export const site: SiteConfig = {
   hasTeam: null, // [OVĚŘIT]
   caseStudy: null, // [TEPO – AŽ PO SOUHLASU]
   videoSrc: null, // [VIDEO ZATÍM NENATOČENO]
-  accountingPrograms: ["POHODA"], // [DOPLNIT PO OVĚŘENÍ]
+  accountingPrograms: ["POHODA", "Money S3", "ABRA", "HELIOS", "PREMIER system"],
   responseTime: null, // [DOBA ODPOVĚDI]
   introCallLength: null, // [DÉLKA ÚVODNÍHO HOVORU]
   brands: [

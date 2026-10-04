@@ -324,9 +324,9 @@ const raw = {
           key: "program",
           title: "Účetní program",
           caption: "Vy zkontrolujete a naimportujete",
-          programs,
+          programs: mainProgram,
           ready: "připraveno k importu",
-          detail: `Soubor je připravený k importu do programu ${programs}. Import děláte vy, nic se nezaúčtuje samo.`,
+          detail: `Soubor je připravený k importu do programu ${mainProgram}. Import děláte vy, nic se nezaúčtuje samo.`,
         },
       ],
     },
@@ -477,7 +477,6 @@ const raw = {
         demo: {
           label: "Účetní program",
           exportLabel: "Export",
-          pending: "[DALŠÍ PROGRAMY PO OVĚŘENÍ]",
         },
       },
       {
@@ -523,7 +522,7 @@ const raw = {
       {
         key: "access",
         title: "Přístup jen pro vaše lidi",
-        text: "Aplikace je jen vaše. Přihlásí se do ní jen lidé z vaší firmy. U kanceláře oddělení podle klientů [OVĚŘIT, ZDA NABÍZÍME].",
+        text: "Aplikace je jen vaše. Přihlásí se do ní jen lidé z vaší firmy. U kanceláře lze přístup rozdělit podle klientů.",
         demo: {
           label: "Kdo se přihlašuje",
           insider: { who: "Kolegyně z kanceláře", result: "Přihlášena" },
@@ -758,7 +757,7 @@ const raw = {
       },
       {
         q: "Které účetní programy podporujete?",
-        a: `Teď máme ověřený import do programu ${programs}. Další programy doplníme, až import otestujeme na reálných fakturách.`,
+        a: `Výstup nastavujeme pro ${programs}. Import do vašeho programu před předáním vyzkoušíme na vašich reálných fakturách.`,
         published: true,
       },
       {

@@ -6,7 +6,7 @@ const valid = {
   name: "Jana Ukázková",
   company: "Ukázková kancelář",
   email: "jana@example.com",
-  phone: "",
+  phone: "777 123 456",
   invoiceVolume: "200-600",
   program: "POHODA",
   programOther: "",
@@ -47,6 +47,12 @@ describe("contactSchema", () => {
 
   it("odmítne nesmyslný telefon", () => {
     for (const phone of ["123", "abc 123 456 789", "+420 777 123 456 789 123 4"]) {
+      expect(contactSchema.safeParse({ ...valid, phone }).success).toBe(false);
+    }
+  });
+
+  it("vyžaduje telefon", () => {
+    for (const phone of ["", "   "]) {
       expect(contactSchema.safeParse({ ...valid, phone }).success).toBe(false);
     }
   });

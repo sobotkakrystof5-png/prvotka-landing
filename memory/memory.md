@@ -52,7 +52,6 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Text ochrany osobních údajů. Blokér Fáze 9, web s živým formulářem bez něj nenasazovat.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
-- [ ] Oddělení přístupu podle klientů u kanceláře: nabízíme? Na webu je zatím placeholder `[OVĚŘIT, ZDA NABÍZÍME]`.
 - [ ] Lighthouse ověřit na náhledovém nasazení Vercel (lokálně Performance 90–91 při gzip a simulovaném 4G, těsně nad hranicí).
 - [ ] `memory/pravidla.md` (část 9) pořád odkazuje na `project-brief-prompt.md`. Soubor se mění jen na pokyn zadavatele: upravit na `PROJECT-BRIEF.md`?
 - [ ] Popisky výzvy: navbar „Kontaktní formulář“ (podle briefu), jinde „Domluvit hovor“. Design skill doporučuje jeden popisek pro jeden záměr. Nechat, nebo sjednotit?
@@ -96,6 +95,24 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-04 – Telefon ve formuláři je povinný
+- **Co:** Pole Telefon v kontaktním formuláři je povinné (9–15 číslic), na klientu i na serveru. Ukazatel vyplnění je „x/7“, štítek „(povinné)“, v e-mailu z formuláře zmizelo „neuvedeno“. Testy upravené, přibyl test na prázdný telefon.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Formulář a Server Action, brief část 8 (tabulka polí, ukazatel). Nižší konverze formuláře je možná, telefon je bariéra pro část návštěvníků.
+- **Soubory:** `src/lib/contactSchema.ts`, `src/components/sections/ContactForm.tsx`, `src/app/actions/contact.ts`, `src/lib/contactSchema.test.ts`, `src/app/actions/contact.test.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-04 – Seznam účetních programů: POHODA, Money S3, ABRA, HELIOS, PREMIER system
+- **Co:** `site.accountingPrograms` rozšířeno z POHODA na pět programů. V dema „Výstup přesně pro váš program“ zmizel čip `[DALŠÍ PROGRAMY PO OVĚŘENÍ]`, přepínač nabízí všech pět. FAQ „Které účetní programy podporujete?“ přepsáno na „Výstup nastavujeme pro … Import před předáním vyzkoušíme na vašich reálných fakturách.“ Workflow nahoře dál ukazuje jako příklad POHODA (`mainProgram`).
+- **Proč:** Na pokyn zadavatele, který seznam dodal.
+- **Dopad:** Odpadla věta „teď máme ověřený import jen do POHODA“, web už neříká, že je ověřená jen jedna. Čipy v kontaktním formuláři (`contactSchema.ts`) zůstaly POHODA · Money S3 · ABRA · Jiný, HELIOS a PREMIER system tam zatím nejsou.
+- **Soubory:** `src/config/site.ts`, `src/content/cs.ts`, `src/components/sections/CustomDemos.tsx`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-04 – Potvrzeno oddělení přístupu podle klientů
+- **Co:** Placeholder `[OVĚŘIT, ZDA NABÍZÍME]` v kartě „Přístup jen pro vaše lidi“ nahrazen větou „U kanceláře lze přístup rozdělit podle klientů.“ Stejná úprava v `PROJECT-BRIEF.md`. Otevřená otázka smazána.
+- **Proč:** Zadavatel potvrdil, že aplikace oddělení podle klientů umí.
+- **Dopad:** Izolované, jen text sekce Na míru. Nově je to veřejný slib, při realizaci zakázky pro kancelář ho nutno splnit.
+- **Soubory:** `src/content/cs.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
 
 ### 2026-10-04 – Odstraněno „[MÍSTO PODNIKÁNÍ]“
 - **Co:** Pole `address` odstraněno z `site.ts`, z patičky a z věty o provozovateli v právních stránkách. Patička: jméno, IČO, nejsem plátce DPH, rok.

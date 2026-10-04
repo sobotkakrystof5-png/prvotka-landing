@@ -6,7 +6,6 @@ import { ArrowRightIcon, CheckIcon, LockIcon, PlusIcon, RotateCcwIcon } from "lu
 import { site } from "@/config/site";
 import { cs } from "@/content/cs";
 import { cn } from "@/lib/utils";
-import { withPlaceholders } from "@/components/motifs/Placeholder";
 
 /**
  * Malé živé ukázky UI u bodů „Na míru“ (princip Chase AI: ukázka místo ikony).
@@ -60,7 +59,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 /** 1. Výstup pro váš program: přepínač programů mění štítek exportu. */
 export function ProgramDemo() {
-  const demo = items[0].demo as { label: string; exportLabel: string; pending: string };
+  const demo = items[0].demo as { label: string; exportLabel: string };
   const [program, setProgram] = useState(site.accountingPrograms[0] ?? "");
   return (
     <div>
@@ -71,9 +70,6 @@ export function ProgramDemo() {
             {name}
           </Chip>
         ))}
-        <Chip active={false} disabled>
-          {withPlaceholders(demo.pending)}
-        </Chip>
       </div>
       <div className="mt-4 flex items-center gap-3 rounded-sm border border-rule bg-paper px-3 py-2.5 font-mono text-[0.82rem]">
         <span className="text-ink-muted">{demo.exportLabel}</span>

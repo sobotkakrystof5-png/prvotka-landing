@@ -13,7 +13,7 @@ const valid = {
   name: "Jana Ukázková",
   company: "Ukázková <b>kancelář</b>",
   email: "jana@example.com",
-  phone: "",
+  phone: "777 123 456",
   invoiceVolume: "200-600",
   program: "POHODA",
   programOther: "",

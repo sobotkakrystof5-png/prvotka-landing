@@ -44,13 +44,11 @@ export const contactSchema = z
     phone: z
       .string()
       .trim()
+      .min(1, { error: "Napište prosím telefon, abych se vám mohl ozvat." })
       .max(30, { error: "Telefon je příliš dlouhý." })
-      .refine(
-        (value) =>
-          value === "" ||
-          (PHONE_CHARS.test(value) && phoneDigits(value) >= 9 && phoneDigits(value) <= 15),
-        { error: "Zkontrolujte prosím telefon, nebo pole nechte prázdné." },
-      ),
+      .refine((value) => PHONE_CHARS.test(value) && phoneDigits(value) >= 9 && phoneDigits(value) <= 15, {
+        error: "Zkontrolujte prosím formát telefonu.",
+      }),
     invoiceVolume: z.enum(INVOICE_VOLUMES, { error: "Vyberte prosím, kolik faktur měsíčně zpracujete." }),
     program: z.enum(ACCOUNTING_PROGRAM_OPTIONS, { error: "Vyberte prosím účetní program." }),
     programOther: z.string().trim().max(100, { error: "Název programu může mít nejvýš 100 znaků." }),

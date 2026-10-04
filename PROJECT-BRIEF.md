@@ -65,10 +65,10 @@ Pokud si nejsi jistý, jestli prvek nepůsobí šablonovitě, navrhni origináln
 - Výstup uživatel před importem kontroluje. Odpovědnost za správnost účetních údajů nese uživatel. Tohle musí být na stránce poctivě řečeno (FAQ).
 
 ### Proč „na míru“ (hlavní argument)
-- Výstup přesně pro účetní program firmy. Seznam programů: `[POHODA + DALŠÍ PO OVĚŘENÍ]`.
+- Výstup přesně pro účetní program firmy. Seznam programů (potvrzeno zadavatelem 2026-10-04): POHODA, Money S3, ABRA, HELIOS, PREMIER system.
 - Mapování polí podle zvyklostí firmy (střediska, předkontace, číselné řady).
 - Vstupní formáty, které firma reálně dostává.
-- Přístup jen pro její lidi, u kanceláře oddělení podle klientů `[OVĚŘIT, ZDA NABÍZÍME]`.
+- Přístup jen pro její lidi, u kanceláře lze přístup rozdělit podle klientů (potvrzeno zadavatelem 2026-10-04).
 - Žádný poplatek za doklad. Aplikace je její.
 
 ### Ochrana dat – POZOR
@@ -108,7 +108,7 @@ Weby jsou inspirace pro principy, ne předloha ke kopírování. Nekopíruj text
 - **Nepřebírat:** tabulky benchmarků a technický žargon. Účetní tomu nerozumí.
 
 ### Chase AI (chaseai.io)
-- **Převzít:** blikající kurzor v nadpisu heru. Ukázka produktu přímo v heru (u nich editor kódu, u nás „záznam zpracování“ faktury). Každá výhoda s malou živou ukázkou UI místo ikony. Postup ve 4 krocích s velkými čísly a řádkem „Typicky: …“. Kontaktní formulář s ukazatelem vyplnění („2/6“), volbou přes čipy a postranním blokem „Co můžete čekat“.
+- **Převzít:** blikající kurzor v nadpisu heru. Ukázka produktu přímo v heru (u nich editor kódu, u nás „záznam zpracování“ faktury). Každá výhoda s malou živou ukázkou UI místo ikony. Postup ve 4 krocích s velkými čísly a řádkem „Typicky: …“. Kontaktní formulář s ukazatelem vyplnění („2/7“), volbou přes čipy a postranním blokem „Co můžete čekat“.
 - **Nepřebírat:** tmavý technický vzhled a příkazovou řádku. Náš „terminál“ je čitelný záznam pro účetní.
 
 ### Ben AI (benai.co)
@@ -281,7 +281,7 @@ Napodobuje skutečný tok produktu: PDF faktura projde systémem, změní se na 
 | 1 | **PDF faktura** | vlastní SVG ikona dokumentu se štítkem „PDF“ | miniatura faktury, která vstoupí do workflow |
 | 2 | **Prvotka** (systém) | logo produktu, do té doby textový znak z navbaru | vytěžení: pole se jedno po druhém vyplní (dodavatel, IČO, číslo faktury, datum, částka), pak stav „zkontrolováno“ |
 | 3 | **ISDOCX** | vlastní SVG ikona dokumentu se štítkem „ISDOCX“, uvnitř strukturované řádky ve stylu `<isdoc:Invoice>` (navazuje na čísla v pozadí) | vznik strukturovaného dokumentu, PDF se v něj vizuálně promění |
-| 4 | **Účetní program** | ikona z `lucide-react`, název programu jako text z `site.accountingPrograms` (POHODA) | stav „připraveno k importu“. Žádné cizí logo. |
+| 4 | **Účetní program** | ikona z `lucide-react`, název programu jako text z `site.accountingPrograms` (POHODA, Money S3, ABRA, HELIOS, PREMIER system) | stav „připraveno k importu“. Žádné cizí logo. |
 
 **Průběh:** uzel 1 se aktivuje → dokument putuje po spoji do uzlu 2 → vyplnění polí → z uzlu 2 vyjede ISDOCX (uzel 3) → putuje do uzlu 4 → „připraveno k importu“. Aktivní úsek spoje se dotáhne v `accent` (`pathLength`), putující dokument je miniatura ikony.
 
@@ -424,7 +424,7 @@ Zásada: každá animace vysvětluje, co produkt dělá, nebo vede pozornost k j
 ### Rozložení
 Dva sloupce (na mobilu pod sebou, formulář první):
 - **Vlevo:** nadpis (návrh: „Postavím aplikaci přesně pro vaši kancelář“), bez perexu (na pokyn zadavatele), kontaktní údaje (Kryštof Sobotka, CEO · e-mail · telefon · IČO), fotka `[FOTO]`. Pod tím blok **„Co můžete čekat“** (styl Chase AI). Obsah jen z ověřených faktů: `[DOBA ODPOVĚDI]`, `[DÉLKA ÚVODNÍHO HOVORU]`, „Nezávazně“. Neověřené body nezobrazuj.
-- **Vpravo:** formulář na podkladu `paper-deep`, s ukazatelem vyplnění „Vyplněno 3/6“ (počítají se jen povinná pole).
+- **Vpravo:** formulář na podkladu `paper-deep`, s ukazatelem vyplnění „Vyplněno 3/7“ (počítají se jen povinná pole).
 
 ### Pole
 | Pole | Typ | Povinné | Validace |
@@ -432,7 +432,7 @@ Dva sloupce (na mobilu pod sebou, formulář první):
 | Jméno a příjmení | text | ano | 2–100 znaků |
 | Firma / kancelář | text | ano | 2–150 znaků |
 | E-mail | email | ano | formát e-mailu |
-| Telefon | tel | ne | české i mezinárodní číslo |
+| Telefon | tel | ano | české i mezinárodní číslo, 9–15 číslic |
 | Faktur měsíčně | čipy | ano | do 200 · 200–600 · 600–1 500 · 1 500+ |
 | Účetní program | čipy | ano | POHODA · Money S3 · ABRA · Jiný (při „Jiný“ se zobrazí textové pole). Popisek neutrální („Jaký účetní program používáte?“). Čipy jsou otázka na návštěvníka, ne tvrzení o podpoře, podporované programy jsou jen v `site.accountingPrograms`. |
 | Zpráva | textarea | ne | max 2 000 znaků |

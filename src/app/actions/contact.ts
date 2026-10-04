@@ -66,7 +66,7 @@ export async function sendContact(raw: unknown): Promise<ContactResult> {
     ["Jméno", data.name],
     ["Firma", data.company],
     ["E-mail", data.email],
-    ["Telefon", data.phone || "neuvedeno"],
+    ["Telefon", data.phone],
     ["Faktur měsíčně", volume],
     ["Účetní program", program],
     ["Zpráva", data.message || "bez zprávy"],

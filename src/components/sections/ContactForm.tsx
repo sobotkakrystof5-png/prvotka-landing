@@ -27,14 +27,15 @@ import { Placeholder } from "@/components/motifs/Placeholder";
 /**
  * Kontaktní formulář (brief, část 8). Validace na klientu i serveru stejným
  * Zod schématem, chyby přes `aria-describedby`, fokus po chybě na první
- * chybné pole. Ukazatel „Vyplněno 3/6“ počítá jen povinná pole.
+ * chybné pole. Ukazatel „Vyplněno 3/7“ počítá jen povinná pole.
  */
 
 type Status = "idle" | "success" | "error";
 type ErrorKind = "invalid" | "too-fast" | "server";
 
-const REQUIRED_TOTAL = 6;
+const REQUIRED_TOTAL = 7;
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_DIGITS = /^\d{9,15}$/;
 
 const defaults: ContactFormInput = {
   name: "",
@@ -85,6 +86,7 @@ export function ContactForm() {
     (values.name ?? "").trim().length >= 2,
     (values.company ?? "").trim().length >= 2,
     EMAIL_SHAPE.test((values.email ?? "").trim()),
+    PHONE_DIGITS.test((values.phone ?? "").replace(/\D/g, "")),
     Boolean(values.invoiceVolume),
     Boolean(values.program) && (values.program !== "Jiný" || (values.programOther ?? "").trim().length >= 2),
     values.consent === true,
@@ -203,7 +205,7 @@ export function ContactForm() {
             {...register("email")}
           />
         </Field>
-        <Field id="contact-phone" label={form.phone} error={errors.phone?.message}>
+        <Field id="contact-phone" label={form.phone} required error={errors.phone?.message}>
           <Input
             id="contact-phone"
             type="tel"
