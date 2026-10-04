@@ -8,7 +8,7 @@ Co se skutečně stalo, jaký je stav a proč. Pravidla formátu jsou v `pravidl
 - **Fáze:** 2026-10-03 přestavěná sekce Proč to řešit a pořadí sekcí, čeká na schválení zadavatelem (screenshot sekcí 02 a 03). Fáze 1–8 implementované lokálně 2026-10-02 na pokyn „kompletní implementace“ (bez průběžných zastávek po fázích). Čeká na schválení: hlavně design na `/styleguide` (Fáze 2), pak celkový dojem (Fáze 7). Fáze 9 (nasazení) blokují podklady v Otevřených otázkách. Nic není commitnuté ani nasazené.
 - **Stack:** Next.js 16.3.8 (App Router, Turbopack) + React 19 + TypeScript, Tailwind CSS 4, shadcn/ui (Radix), Motion 14, React Hook Form + Zod 4, Resend, Vitest 5, npm. Hosting Vercel Hobby.
 - **Co existuje:** celá landing page (10 sekcí, 9 viditelných), právní stránky jako placeholder, 404, `/styleguide`, OG obrázek, sitemap, robots, JSON-LD, Server Action formuláře, bezpečnostní vrstva a `.claude/security/`, CI workflow. Zadání je `PROJECT-BRIEF.md` (verze 1.1).
-- **Ověřeno lokálně (`next start`, 2026-10-02):** lint, typy, 31 testů, build bez varování. Chromium i WebKit na 360/768/1024/1440 px bez vodorovného scrollu, 0 porušení CSP, 0 chyb v konzoli, i s `prefers-reduced-motion`. Lighthouse mobil: Performance 90–91, Accessibility 100, Best Practices 100, SEO 100, CLS 0. Formulář: validace a chybové stavy fungují, skutečné odeslání e-mailu neověřené (chybí klíč Resend a doména).
+- **Ověřeno lokálně (`next start`, 2026-10-02):** lint, typy, 31 testů, build bez varování. Chromium i WebKit na 360/768/1024/1440 px bez vodorovného scrollu, 0 porušení CSP, 0 chyb v konzoli, i s `prefers-reduced-motion`. Lighthouse mobil: Performance 90–91, Accessibility 100, Best Practices 100, SEO 100, CLS 0. Formulář: validace a chybové stavy fungují, skutečné odeslání e-mailu ověřené až 2026-10-04 (viz changelog).
 
 ## Klíčová rozhodnutí
 
@@ -41,14 +41,14 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 
 Čekají na zadavatele. Po zodpovězení se smažou.
 
-- [ ] Registrace `prvotka.cz` (zadavatel, na sebe nebo na firmu) a ověření dostupnosti u českého registrátora nebo ve whois CZ.NIC. Až bude doména jeho, doplnit `site.domain`, `AGENTS.md`, `.env.example` a doménu pro Resend. Volitelně `prvotka.com` jako přesměrování.
+- [ ] Doména `prvotka.cz` je v Resendu ověřená (2026-10-04, odeslání z `krystof@prvotka.cz` prošlo). Zbývá doplnit `site.domain`, `AGENTS.md`, `.env.example`, `security.txt` (`Canonical`) a ověřit DMARC/SPF/DKIM. Volitelně `prvotka.com` jako přesměrování.
 - [ ] Příběh v sekci Proč to řešit: počet obvolaných kanceláří nebo skutečné citace účetních (se souhlasem)? Do té doby bez čísel a citací.
 - [ ] Vytěžování lokálně, nebo přes cloudové AI API (rozhoduje `site.dataStaysOnPremise`).
 - [ ] Změřený čas na fakturu s aplikací (TEPO).
 - [ ] Výše měsíční správy a zda zobrazit cenu.
 - [ ] Tým, nebo zakladatel sám (`site.hasTeam`).
 - [ ] Podporované účetní programy kromě POHODY.
-- [ ] Kontaktní údaje: e-mail pro poptávky, místo podnikání (§ 435 OZ, ověřit povinnost). Telefon doplněn 2026-10-03.
+- [ ] Kontaktní údaje: místo podnikání (§ 435 OZ, ověřit povinnost). Telefon a e-mail na webu (`krystof@prvotka.cz`) doplněné 2026-10-03/04. Schránka musí existovat a `CONTACT_TO_EMAIL` ve Vercelu se nastavuje zvlášť.
 - [ ] Text ochrany osobních údajů. Blokér Fáze 9, web s živým formulářem bez něj nenasazovat.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
@@ -62,7 +62,6 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Souhlas TEPO s případovou studií.
 - [ ] Klíčová slova z Collabimu nebo jiného nástroje.
 - [ ] Statický, nebo pevný navbar.
-- [ ] Doména pro odesílání e-mailů přes Resend.
 - [ ] Commit, soukromé GitHub repo a push: kód je zatím jen lokálně v novém repozitáři bez commitu.
 
 ## Záměrně neudělané
@@ -91,11 +90,29 @@ Aby to další session „neopravovala“ jako chybu.
 - **`/styleguide` zůstává do Fáze 9.** Má `noindex` a zákaz v robots.txt. Před nasazením odstranit.
 - **Právní stránky mají `noindex` a nejsou v sitemapě,** dokud obsahují jen placeholder.
 - **IČO v ukázkách záměrně nemají platný kontrolní součet a účty mají kód banky 0000.** Nemůžou kolidovat se skutečnou firmou.
-- **`security.txt` má placeholder kontakt.** Není platný, dokud zadavatel nedodá e-mail (STATE.md).
+- **`security.txt` má placeholder v `Canonical`.** Není platný, dokud zadavatel nezaregistruje doménu (STATE.md).
 
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-04 – Odeslání kontaktního formuláře ověřeno lokálně
+- **Co:** Na `npm run dev` odeslán testovací formulář (údaje „TEST s.r.o.“, odpověď na `test@example.com`). Web zobrazil potvrzení, Resend přijal e-mail bez chyby a zadavatel potvrdil, že e-mail přišel. Založen `.env.local` (necommitovaný) s `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` a `CONTACT_TO_EMAIL`.
+- **Proč:** Na pokyn zadavatele, formulář nebyl dosud ověřen end-to-end.
+- **Dopad:** Kód formuláře se neměnil. Zadavatel později potvrdil, že proměnné `RESEND_API_KEY`, `CONTACT_TO_EMAIL` a `CONTACT_FROM_EMAIL` nastavil i ve Vercelu (neověřeno z mé strany, odeslání z nasazené verze zatím netestováno). Ostré spuštění stále blokuje rate limit (DECISIONS #005) a text ochrany osobních údajů. Konzole bez chyb.
+- **Soubory:** `.env.local` (mimo git), `memory/memory.md`
+
+### 2026-10-04 – Odstranění API klíče z .env.example
+- **Co:** V `.env.example` (sledovaný v gitu) byl vyplněný skutečný `RESEND_API_KEY`. Hodnota vrácena na prázdnou. Klíč zůstává jen v `.env.local` (ignorovaný gitem). `CONTACT_TO_EMAIL` a `CONTACT_FROM_EMAIL` zůstávají nastavené na `krystof@prvotka.cz`.
+- **Proč:** Tajemství nesmí být v souboru, který se commituje. Do historie se nedostal (ověřeno přes `git log -S`), takže rotace klíče není nutná, pokud soubor nikam nešel mimo lokální disk.
+- **Dopad:** Žádný na běh webu. Skutečné hodnoty patří do Vercelu a `.env.local`.
+- **Soubory:** `.env.example`, `memory/memory.md`
+
+### 2026-10-04 – E-mail krystof@prvotka.cz na webu
+- **Co:** `site.email` změněn z placeholderu `[E-MAIL]` na `krystof@prvotka.cz`. Adresa se zobrazuje jako odkaz `mailto:` v sekci Kontakt, u formuláře a v `<noscript>` záložce. V `security.txt` je stejná adresa jako kontakt.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Doména `prvotka.cz` zatím není registrovaná, takže schránka nefunguje, dokud se nezaloží doména a e-mail. Adresát formuláře `CONTACT_TO_EMAIL` se nastavuje zvlášť ve Vercelu a touto změnou se nezměnil. `security.txt` pořád není platný kvůli `Canonical`.
+- **Soubory:** `src/config/site.ts`, `public/.well-known/security.txt`, `.claude/security/STATE.md`, `memory/memory.md`
 
 ### 2026-10-03 – Nový perex sekce Na míru
 - **Co:** Perex `#na-miru` změněn z „Každou aplikaci stavíme pro jednu firmu. Nekupujete krabicový program, na který si musíte zvyknout. Postavíme ho kolem toho, jak u vás s fakturami opravdu pracujete.“ na „Žádný krabicový program, kterému se musíte přizpůsobit. Aplikaci stavíme jen pro vaši kancelář, podle toho, jak u vás s fakturami opravdu pracujete.“

@@ -77,7 +77,7 @@ poptávek nebo doména zneužitá k phishingu, pokud chybí SPF/DKIM/DMARC.
 | Bod | Proč | Kdo | Kdy |
 |---|---|---|---|
 | Rate limit formuláře | paměť serverless instance se nesdílí | ověřit Vercel Firewall na Hobby, případně Upstash se souhlasem | Fáze 6 na náhledovém nasazení |
-| `security.txt` | kontakt `[E-MAIL]` je placeholder, soubor zatím není platný | zadavatel dodá e-mail | před nasazením |
+| `security.txt` | kontakt je `krystof@prvotka.cz`, ale `Canonical` má placeholder domény, soubor zatím není platný | zadavatel registruje doménu | před nasazením |
 | HSTS preload | až po měsíci bezchybného HTTPS | já | měsíc po spuštění |
 | DNS (CAA, DNSSEC, SPF, DKIM, DMARC) | bez nich jde doménu zneužít k podvrženým e-mailům | zadavatel | před nasazením |
 | GitHub repo + CI | workflow `.github/workflows/security.yml` je připravené, běží až po pushi | zadavatel (souhlas) | Fáze 1/9 |

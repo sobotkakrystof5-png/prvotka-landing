@@ -64,7 +64,7 @@ export const site: SiteConfig = {
   name: "Prvotka",
   domain: "[DOMÉNA]",
   ceo: "Kryštof Sobotka",
-  email: "[E-MAIL]",
+  email: "krystof@prvotka.cz",
   phone: "+420 604 837 333",
   ico: "29977231",
   address: "[MÍSTO PODNIKÁNÍ]",
