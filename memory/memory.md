@@ -96,6 +96,12 @@ Aby to další session „neopravovala“ jako chybu.
 
 Nejnovější nahoře.
 
+### 2026-10-04 – Z placeholderu videa odstraněn štítek „[VIDEO 2 MIN]“
+- **Co:** V sekci „Kdo za tím stojí“ zůstal v rámečku videa jen text „Video připravujeme“, štítek `[VIDEO 2 MIN]` zmizel včetně klíče `tag` v `cs.ts`.
+- **Proč:** Na pokyn zadavatele.
+- **Dopad:** Izolované. Rámeček má dál pevný `aspect-ratio`, přehrávač se vykreslí po vyplnění `site.videoSrc`. Lint, typecheck a testy prošly, nenasazeno.
+- **Soubory:** `src/components/sections/About.tsx`, `src/content/cs.ts`, `memory/memory.md`
+
 ### 2026-10-04 – Telefon ve formuláři je povinný
 - **Co:** Pole Telefon v kontaktním formuláři je povinné (9–15 číslic), na klientu i na serveru. Ukazatel vyplnění je „x/7“, štítek „(povinné)“, v e-mailu z formuláře zmizelo „neuvedeno“. Testy upravené, přibyl test na prázdný telefon.
 - **Proč:** Na pokyn zadavatele.

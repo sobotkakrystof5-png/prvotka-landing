@@ -2,7 +2,6 @@ import Image from "next/image";
 import { site } from "@/config/site";
 import { cs } from "@/content/cs";
 import { Section, SectionTitle } from "@/components/layout/Section";
-import { Placeholder } from "@/components/motifs/Placeholder";
 import { BrandMarquee } from "./BrandMarquee";
 import { VideoPlayer } from "./VideoPlayer";
 
@@ -49,7 +48,6 @@ export function About() {
               ) : (
                 <div className="ledger flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-field-border bg-paper text-center [--ledger-step:1.75rem]">
                   <p className="font-heading text-[1.5rem]">{about.video.placeholder}</p>
-                  <Placeholder>{about.video.tag}</Placeholder>
                 </div>
               )}
             </div>

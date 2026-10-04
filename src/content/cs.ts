@@ -715,7 +715,6 @@ const raw = {
     photoAlt: "Kryštof Sobotka, CEO",
     video: {
       placeholder: "Video připravujeme",
-      tag: "[VIDEO 2 MIN]",
       play: "Přehrát video (2:00)",
       duration: "2:00",
     },
