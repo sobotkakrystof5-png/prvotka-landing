@@ -42,7 +42,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 
 Čekají na zadavatele. Po zodpovězení se smažou.
 
-- [ ] Doména: ve Vercelu přepnout primární doménu z `www.prvotka.cz` na `prvotka.cz` (www → 308 na apex). Dokud se to nestane, canonical a sitemapa ukazují na URL, která přesměrovává. Ověřit DMARC/SPF/DKIM v DNS. Volitelně `prvotka.com` jako přesměrování.
+- [ ] Doména: ve Vercelu přepnout primární doménu z `www.prvotka.cz` na `prvotka.cz` (www → 308 na apex). Dokud se to nestane, canonical a sitemapa ukazují na URL, která přesměrovává. DNS (2026-10-05): na apexu chybí SPF pro Google Workspace (`v=spf1 include:_spf.google.com ~all`), DMARC je `p=none`, cíl `p=quarantine`. Volitelně `prvotka.com` jako přesměrování.
 - [ ] Příběh v sekci Proč to řešit: počet obvolaných kanceláří nebo skutečné citace účetních (se souhlasem)? Do té doby bez čísel a citací.
 - [ ] Vytěžování lokálně, nebo přes cloudové AI API (rozhoduje `site.dataStaysOnPremise`).
 - [ ] Změřený čas na fakturu s aplikací (TEPO).
@@ -101,7 +101,7 @@ Nejnovější nahoře.
 ### 2026-10-05 – Doména `prvotka.cz` v konfiguraci
 - **Co:** `site.domain` je `prvotka.cz` místo `[DOMÉNA]`. `siteUrl()` tím vrací `https://prvotka.cz` pro metadata, canonical, sitemapu, robots a JSON-LD. Obchodní podmínky ukazují „Web: prvotka.cz“. `security.txt` má platný `Canonical`, `.env.example` a `STATE.md` bez placeholderu domény.
 - **Proč:** Pokyn zadavatele (napsal „provtka.cz“, bráno jako překlep schválené `prvotka.cz`). Varianta bez www na základě rozhodnutí zadavatele.
-- **Dopad:** DNS ověřeno 2026-10-05: doména je připojená ve Vercelu, ale primární je teď `www.prvotka.cz` a apex na ni přesměrovává 308. Před nasazením téhle změny musí zadavatel ve Vercelu přepnout primární doménu na `prvotka.cz`. Ověřeno: typy, testy.
+- **Dopad:** Nasazeno 2026-10-05 (`3696f40`, READY, ověřeno Chromium + WebKit na produkci, 0 chyb, 0 porušení CSP). DNS ověřeno 2026-10-05: doména je připojená ve Vercelu, ale primární je teď `www.prvotka.cz` a apex na ni přesměrovává 308. Před nasazením téhle změny musí zadavatel ve Vercelu přepnout primární doménu na `prvotka.cz`. Ověřeno: typy, testy.
 - **Soubory:** `src/config/site.ts`, `public/.well-known/security.txt`, `.env.example`, `.claude/security/STATE.md`, `memory/memory.md`
 
 ### 2026-10-05 – Obchodní podmínky: záloha 40 %, doplatek 60 %

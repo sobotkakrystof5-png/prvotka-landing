@@ -22,7 +22,8 @@ Rozsah: diff proti `c247360`: `contactSchema.ts`, `ContactForm.tsx`, `site.ts`, 
 Výsledek: 0 nálezů.
 Nálezy: žádné. Server Action dál validuje Zod schématem s limity délky. Pole `consent` zmizelo jen ze schématu, neznámé klíče Zod zahodí. V diffu nejsou tajné údaje, `NEXT_PUBLIC_` ani `dangerouslySetInnerHTML`.
 Opraveno: `security.txt` má platný `Canonical` (`https://prvotka.cz`).
-Zůstává otevřené: rate limit formuláře, DNS záznamy (SPF/DKIM/DMARC, CAA), primární doména ve Vercelu je zatím `www`. `security-check.sh prvotka.cz` po nasazení.
+Zůstává otevřené: rate limit formuláře, primární doména ve Vercelu je zatím `www`.
+Po nasazení (`3696f40`, `dpl_48Ffnrw2FTtcWyhrVjFP1LRQQPW7`, READY): Playwright Chromium + WebKit, 360 a 1440 px, `/`, obě právní stránky: 0 chyb v konzoli, 0 porušení CSP, bez vodorovného scrollu. `security-check.sh www.prvotka.cz` napoprvé 28 prošlo / 4 varování / 1 chyba. Chyba „certifikát“ a varování „TLS 1.3“ jsou falešná (ověřeno `openssl s_client`: TLS 1.3, Let's Encrypt do 2027-01-02). Druhý běh dostal 403 `x-vercel-mitigated: challenge`, automatická ochrana Vercelu proti série dotazů, vlastní firewall projekt nemá. DNS: CAA a DNSSEC ok, DMARC `p=none` na `_dmarc.prvotka.cz` existuje (skript ho hledal u `www`), SPF je jen na `send.prvotka.cz` (Resend), na apexu chybí.
 
 ## 2026-10-02 – review (lokálně, před prvním nasazením)
 Spouštěč: Fáze 1–8, založení kódu.

@@ -56,7 +56,7 @@ poptávek nebo doména zneužitá k phishingu, pokud chybí SPF/DKIM/DMARC.
 |---|---|
 | DNSSEC | ❌ doména zatím není |
 | CAA | ❌ doména zatím není (doporučení: `0 issue "letsencrypt.org"` pro Vercel) |
-| SPF | ⚠️ odesílací doména pro Resend `prvotka.cz`, v Resendu ověřená 2026-10-04. Záznam ověřit v DNS |
+| SPF | ⚠️ `send.prvotka.cz` má SPF pro Resend ✅. Na apexu `prvotka.cz` SPF chybí, pošta je Google Workspace (MX `smtp.google.com`) → doplnit `v=spf1 include:_spf.google.com ~all` |
 | DKIM | ❌ nastaví se při ověření domény v Resend |
 | DMARC | ❌ začít `p=quarantine`, cíl `p=reject` |
 
