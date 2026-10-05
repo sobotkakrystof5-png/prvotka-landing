@@ -60,7 +60,7 @@ export interface SiteConfig {
 
 export const site: SiteConfig = {
   name: "Prvotka",
-  domain: "[DOMÉNA]",
+  domain: "prvotka.cz",
   ceo: "Kryštof Sobotka",
   email: "krystof@prvotka.cz",
   phone: "+420 604 837 333",

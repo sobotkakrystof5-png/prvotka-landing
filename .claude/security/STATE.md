@@ -7,7 +7,7 @@
 
 ## Projekt
 
-- Web: `[DOMÉNA]`, zatím nenasazeno
+- Web: `prvotka.cz` (`site.domain` od 2026-10-05). Doména je připojená ve Vercelu, primární musí být `prvotka.cz` (zatím `www`, zadavatel přepne)
 - Hosting: Vercel Hobby (rozhodnutí v DECISIONS.md #001)
 - Framework: Next.js 16.3.8 (App Router), React 19, Turbopack
 - Repo: lokální git ve složce projektu, GitHub repo zatím nezaložené (čeká na souhlas zadavatele)
@@ -56,7 +56,7 @@ poptávek nebo doména zneužitá k phishingu, pokud chybí SPF/DKIM/DMARC.
 |---|---|
 | DNSSEC | ❌ doména zatím není |
 | CAA | ❌ doména zatím není (doporučení: `0 issue "letsencrypt.org"` pro Vercel) |
-| SPF | ❌ odesílací doména pro Resend `[DOMÉNA PRO RESEND]` |
+| SPF | ⚠️ odesílací doména pro Resend `prvotka.cz`, v Resendu ověřená 2026-10-04. Záznam ověřit v DNS |
 | DKIM | ❌ nastaví se při ověření domény v Resend |
 | DMARC | ❌ začít `p=quarantine`, cíl `p=reject` |
 
@@ -77,7 +77,6 @@ poptávek nebo doména zneužitá k phishingu, pokud chybí SPF/DKIM/DMARC.
 | Bod | Proč | Kdo | Kdy |
 |---|---|---|---|
 | Rate limit formuláře | paměť serverless instance se nesdílí | ověřit Vercel Firewall na Hobby, případně Upstash se souhlasem | Fáze 6 na náhledovém nasazení |
-| `security.txt` | kontakt je `krystof@prvotka.cz`, ale `Canonical` má placeholder domény, soubor zatím není platný | zadavatel registruje doménu | před nasazením |
 | HSTS preload | až po měsíci bezchybného HTTPS | já | měsíc po spuštění |
 | DNS (CAA, DNSSEC, SPF, DKIM, DMARC) | bez nich jde doménu zneužít k podvrženým e-mailům | zadavatel | před nasazením |
 | GitHub repo + CI | workflow `.github/workflows/security.yml` je připravené, běží až po pushi | zadavatel (souhlas) | Fáze 1/9 |

@@ -53,7 +53,6 @@ export const contactSchema = z
     program: z.enum(ACCOUNTING_PROGRAM_OPTIONS, { error: "Vyberte prosím účetní program." }),
     programOther: z.string().trim().max(100, { error: "Název programu může mít nejvýš 100 znaků." }),
     message: z.string().trim().max(2000, { error: "Zpráva může mít nejvýš 2 000 znaků." }),
-    consent: z.boolean().refine((value) => value === true, { error: "Bez souhlasu vám nemůžu odpovědět." }),
     /** Okamžik, kdy se formulář zobrazil (ms). Slouží ke kontrole minimální doby vyplnění. */
     startedAt: z.number().int().nonnegative(),
   })

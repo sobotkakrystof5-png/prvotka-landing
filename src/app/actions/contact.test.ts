@@ -18,7 +18,6 @@ const valid = {
   program: "POHODA",
   programOther: "",
   message: "<script>alert(1)</script>",
-  consent: true,
 };
 
 describe("sendContact (Server Action)", () => {

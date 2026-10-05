@@ -39,7 +39,7 @@ export function About() {
               {about.story.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
-              <p className="text-ink-muted">{about.team}</p>
+              {about.team && <p className="text-ink-muted">{about.team}</p>}
             </div>
 
             <div className="mt-12 max-w-[44rem]">

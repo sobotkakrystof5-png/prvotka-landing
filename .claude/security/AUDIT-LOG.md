@@ -16,6 +16,14 @@ Zůstává otevřené: co a proč
 
 ---
 
+## 2026-10-05 – review (před nasazením)
+Spouštěč: commit a nasazení (formulář bez zaškrtávátka souhlasu, právní texty, doména).
+Rozsah: diff proti `c247360`: `contactSchema.ts`, `ContactForm.tsx`, `site.ts`, `security.txt`, `.env.example`. Hledání tajných údajů a HTML sinků v diffu, lint, typy, 41 testů, `next build`.
+Výsledek: 0 nálezů.
+Nálezy: žádné. Server Action dál validuje Zod schématem s limity délky. Pole `consent` zmizelo jen ze schématu, neznámé klíče Zod zahodí. V diffu nejsou tajné údaje, `NEXT_PUBLIC_` ani `dangerouslySetInnerHTML`.
+Opraveno: `security.txt` má platný `Canonical` (`https://prvotka.cz`).
+Zůstává otevřené: rate limit formuláře, DNS záznamy (SPF/DKIM/DMARC, CAA), primární doména ve Vercelu je zatím `www`. `security-check.sh prvotka.cz` po nasazení.
+
 ## 2026-10-02 – review (lokálně, před prvním nasazením)
 Spouštěč: Fáze 1–8, založení kódu.
 Rozsah: hlavičky přes `curl` na `next start`, CSP v Chromiu a WebKitu (Playwright, `securitypolicyviolation`), Server Action formuláře (unit testy), `npm audit --omit=dev`.

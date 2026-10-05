@@ -15,9 +15,8 @@ import { deepTypo } from "@/lib/typography";
 const programs = site.accountingPrograms.join(", ");
 const mainProgram = site.accountingPrograms[0] ?? "[ÚČETNÍ PROGRAM]";
 
-const teamLine = site.hasTeam
-  ? "Pod vedením zkušených programátorů."
-  : "Vývoj vede Kryštof Sobotka, autor Alteno a Vizeon.";
+/** Věta o týmu jen při `site.hasTeam === true`, jinak se nevykreslí. */
+const teamLine = site.hasTeam ? "Pod vedením zkušených programátorů." : null;
 
 const priceLine = `${new Intl.NumberFormat("cs-CZ").format(site.price)} Kč jednorázově (nejsem plátce DPH)`;
 const feeLine =
@@ -778,7 +777,7 @@ const raw = {
       },
       {
         q: "Co když nás to omezí? Můžeme skončit?",
-        a: "[DOPLNIT PODLE SMLOUVY O SPRÁVĚ]",
+        a: "Ano. Správu můžete vypovědět s tříměsíční výpovědní dobou. Aplikaci vám pak předám k nasazení na váš hosting a vrátím vám data. Licence k aplikaci je časově neomezená.",
         published: false,
       },
     ],
@@ -815,8 +814,8 @@ const raw = {
       message: "Zpráva",
       messageHint: "Třeba s čím teď nejvíc bojujete.",
       messageCounter: (count: number) => `${count} / 2 000 znaků`,
-      consent: "Souhlasím se zpracováním osobních údajů pro odpověď na poptávku.",
-      consentLink: "Jak s údaji zacházím",
+      privacyNotice: "Odesláním formuláře berete na vědomí,",
+      privacyLink: "jak zpracovávám osobní údaje",
       honeypot: "Toto pole nevyplňujte",
       submit: "Odeslat poptávku",
       sending: "Odesílám…",
@@ -852,7 +851,7 @@ const raw = {
     privacy: {
       title: "Ochrana osobních údajů",
       description: "Informace o zpracování osobních údajů z kontaktního formuláře.",
-      updated: "Poslední úprava 4. 10. 2026",
+      updated: "Poslední úprava 5. 10. 2026",
       basis: "Podle nařízení EU 2016/679 (GDPR) a zákona č. 110/2019 Sb., o zpracování osobních údajů.",
       intro:
         "Když mi napíšete přes kontaktní formulář, dostanu od vás pár osobních údajů. Tady je přehledně, co s nimi dělám, jak dlouho je mám a jaká máte práva.",
@@ -877,6 +876,7 @@ const raw = {
               "přibližný počet faktur za měsíc a účetní program, který používáte,",
               "text zprávy, pokud ji napíšete.",
             ],
+            "Povinné jsou všechny údaje kromě zprávy. Poskytnout mi je nemusíte, bez nich vám ale na poptávku nemůžu odpovědět.",
             "Hosting webu u každého požadavku zaznamenává technické údaje, například IP adresu a čas. Slouží k provozu webu a k jeho ochraně před zneužitím.",
             "Nesbírám citlivé údaje ve smyslu čl. 9 GDPR. Neprovádím automatizované rozhodování ani profilování.",
           ],
@@ -887,7 +887,8 @@ const raw = {
             [
               "abych odpověděl na vaši poptávku a domluvil s vámi hovor,",
               "abych s vámi jednal o případné zakázce a připravil nabídku,",
-              "abych plnil smlouvu, pokud ji spolu uzavřeme.",
+              "abych plnil smlouvu, pokud ji spolu uzavřeme,",
+              "abych splnil povinnosti, které mi ukládají daňové předpisy, například uchovávání faktur.",
             ],
             "Údaje nepoužívám k marketingu a nikomu je neprodávám.",
           ],
@@ -897,6 +898,7 @@ const raw = {
           blocks: [
             [
               "Čl. 6 odst. 1 písm. b) GDPR: jednání o smlouvě na vaši žádost a její plnění.",
+              "Čl. 6 odst. 1 písm. c) GDPR: plnění mých zákonných povinností, hlavně uchovávání daňových dokladů.",
               "Čl. 6 odst. 1 písm. f) GDPR: můj oprávněný zájem na evidenci obchodní komunikace pro případ sporu a na ochraně webu před zneužitím.",
             ],
           ],
@@ -907,6 +909,7 @@ const raw = {
             [
               "Když spolupráce nevznikne, nejdéle 6 měsíců od přijetí poptávky.",
               "Když spolupráci uzavřeme, po dobu jejího trvání a potom ještě 3 roky kvůli obecné promlčecí lhůtě podle § 629 občanského zákoníku.",
+              "Faktury a další daňové doklady po dobu, kterou ukládají daňové předpisy.",
             ],
             "Web poptávky nikam neukládá. Zpráva z formuláře mi přijde e-mailem a dál s ní pracuji ve své e-mailové schránce.",
           ],
@@ -960,7 +963,7 @@ const raw = {
     terms: {
       title: "Obchodní podmínky",
       description: "Obchodní podmínky pro dodání aplikace na míru.",
-      updated: "Platné od [DATUM ÚČINNOSTI]",
+      updated: "Platné od 5. 10. 2026",
       basis: "Podle zákona č. 89/2012 Sb., občanský zákoník. Pro smlouvy mezi podnikateli.",
       intro:
         "Tyto podmínky upravují, jak spolu spolupracujeme od nabídky přes dodání aplikace až po její správu. Co je v nich napsané, platí, pokud si v nabídce nebo ve smlouvě nedomluvíme něco jiného.",
@@ -991,7 +994,7 @@ const raw = {
           blocks: [
             "Aplikaci na míru, která z faktur v PDF, skenech a fotkách vyčte údaje, zkontroluje součty a DPH a připraví soubor ISDOC nebo ISDOCX pro import do účetního programu. Součástí dodávky je nasazení na server, test na reálných fakturách klienta a zaškolení.",
             "Import do účetního programu provádí klient. Aplikace sama do účetnictví nic nezapisuje.",
-            "Přesný rozsah, podporovaný účetní program a cena jsou vždy v nabídce pro konkrétního klienta. Pokud aplikace k vytěžování údajů používá službu třetí strany, nabídka ji uvádí.",
+            "Přesný rozsah, podporovaný účetní program a cena jsou vždy v nabídce pro konkrétního klienta. Pokud aplikace k vytěžování údajů používá službu třetí strany, nabídka ji uvádí včetně toho, kdo hradí její poplatky.",
           ],
         },
         {
@@ -1000,9 +1003,10 @@ const raw = {
             [
               "Klient se ozve přes kontaktní formulář nebo e-mailem a domluvíme si hovor.",
               "Připravím nabídku a pošlu ji e-mailem.",
-              "Smlouva vzniká, když klient nabídku e-mailem potvrdí a zaplatí zálohu podle oddílu 5.",
+              "Smlouva vzniká, když klient nabídku potvrdí e-mailem.",
             ],
-            "Nabídka platí 14 dní od odeslání, pokud v ní není uvedeno jinak.",
+            "Nabídka odkazuje na tyto podmínky. Potvrzením nabídky s nimi klient souhlasí.",
+            "Nabídka platí 14 dní od odeslání, pokud v ní není uvedeno jinak. Práce začínám po připsání zálohy podle oddílu 5 a od toho dne běží i termín dodání.",
           ],
         },
         {
@@ -1010,8 +1014,8 @@ const raw = {
           blocks: [
             "Nejsem plátce DPH, k ceně se proto DPH nepřipočítává. Cena je splatná ve dvou částech:",
             [
-              "záloha 30 % ceny před zahájením prací na základě zálohové faktury. Pracovat začínám po připsání zálohy na účet,",
-              "doplatek 70 % ceny po předání aplikace na základě konečné faktury se splatností 14 dní.",
+              "záloha 40 % ceny před zahájením prací na základě zálohové faktury. Pracovat začínám po připsání zálohy na účet,",
+              "doplatek 60 % ceny po předání aplikace na základě konečné faktury se splatností 14 dní.",
             ],
             "Platí se bankovním převodem, platební údaje jsou na faktuře.",
             "Když je klient s platbou v prodlení, můžu do úplného zaplacení pozastavit práce i správu.",
@@ -1043,7 +1047,7 @@ const raw = {
           blocks: [
             "Aplikace je autorské dílo podle zákona č. 121/2000 Sb.",
             [
-              "Po úplném zaplacení ceny dostane klient nevýhradní licenci k užívání aplikace pro vlastní potřebu v rozsahu podle nabídky.",
+              "Po úplném zaplacení ceny dostane klient nevýhradní a časově neomezenou licenci k užívání aplikace pro vlastní potřebu v rozsahu podle nabídky.",
               "Zdrojový kód zůstává můj, pokud se písemně nedohodneme na jeho převodu.",
               "Licenci nelze bez mého písemného souhlasu postoupit třetí osobě.",
               "Jméno klienta ani spolupráci s ním bez jeho písemného souhlasu nezveřejňuji.",
@@ -1066,13 +1070,14 @@ const raw = {
               "Na hostingu klienta: aplikaci nasadím na server nebo hosting klienta a předám ji. Za provoz a dostupnost pak odpovídá klient. Zásahy na jeho žádost účtuji podle hodinové sazby uvedené v nabídce.",
               "U mě se správou: aplikace běží na hostingu, který zajišťuji já, a klient platí měsíční správu podle nabídky. Hlídám provoz a zasáhnu při výpadku nebo chybě. Nové funkce a úpravy nad rámec dohody se účtují zvlášť.",
             ],
-            "Správa se sjednává na dobu neurčitou. Klient ji může vypovědět e-mailem s výpovědní dobou [VÝPOVĚDNÍ DOBA]. Po skončení správy [CO SE STANE S APLIKACÍ A DATY].",
+            "Správa se sjednává na dobu neurčitou. Klient i já ji můžeme vypovědět e-mailem. Výpovědní doba je 3 měsíce a začíná prvním dnem měsíce po doručení výpovědi.",
+            "Po skončení správy na žádost klienta předám aplikaci k nasazení na jeho hosting (zásah podle hodinové sazby z nabídky) a vrátím mu jeho data. Do 30 dní od skončení správy všechna data klienta ze svého hostingu smažu.",
           ],
         },
         {
           heading: "Osobní údaje ve fakturách",
           blocks: [
-            "Faktury klienta můžou obsahovat osobní údaje, například jména podnikajících fyzických osob. Pokud se k nim při dodání nebo správě aplikace dostanu, zpracovávám je pro klienta jako zpracovatel a jen v rozsahu nutném pro dodání a správu.",
+            "Faktury klienta můžou obsahovat osobní údaje, například jména podnikajících fyzických osob. Pokud se k nim při dodání nebo správě aplikace dostanu, zpracovávám je pro klienta jako zpracovatel a jen v rozsahu nutném pro dodání a správu. Když účetní kancelář zpracovává faktury svých klientů, jsem v roli dalšího zpracovatele.",
             "Podmínky zpracování upravuje zpracovatelská smlouva podle čl. 28 GDPR, kterou uzavřeme spolu se smlouvou.",
             "O všem, co se z faktur a z účetnictví klienta dozvím, zachovávám mlčenlivost i po skončení spolupráce.",
           ],
@@ -1099,6 +1104,7 @@ const raw = {
           heading: "Závěrečná ustanovení",
           blocks: [
             "Podmínky můžu změnit. Změna platí od zveřejnění nové verze na tomto webu. Na smlouvy uzavřené dřív se vztahuje znění platné v době jejich uzavření.",
+            "Písemnou formou se v těchto podmínkách rozumí i e-mail.",
             "Když je některé ustanovení neplatné nebo nevymahatelné, ostatní ustanovení platí dál.",
           ],
         },

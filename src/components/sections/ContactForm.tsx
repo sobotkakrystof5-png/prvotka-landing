@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckIcon, LoaderIcon } from "lucide-react";
 import { site, isPlaceholder } from "@/config/site";
@@ -19,7 +19,6 @@ import { CONTACT_FIRST_FIELD_ID } from "@/lib/navigate";
 import { cn } from "@/lib/utils";
 import { sendContact } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Placeholder } from "@/components/motifs/Placeholder";
@@ -27,13 +26,13 @@ import { Placeholder } from "@/components/motifs/Placeholder";
 /**
  * Kontaktní formulář (brief, část 8). Validace na klientu i serveru stejným
  * Zod schématem, chyby přes `aria-describedby`, fokus po chybě na první
- * chybné pole. Ukazatel „Vyplněno 3/7“ počítá jen povinná pole.
+ * chybné pole. Ukazatel „Vyplněno 3/6“ počítá jen povinná pole.
  */
 
 type Status = "idle" | "success" | "error";
 type ErrorKind = "invalid" | "too-fast" | "server";
 
-const REQUIRED_TOTAL = 7;
+const REQUIRED_TOTAL = 6;
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_DIGITS = /^\d{9,15}$/;
 
@@ -46,7 +45,6 @@ const defaults: ContactFormInput = {
   program: undefined as unknown as ContactFormInput["program"],
   programOther: "",
   message: "",
-  consent: false,
   startedAt: 0,
 };
 
@@ -89,7 +87,6 @@ export function ContactForm() {
     PHONE_DIGITS.test((values.phone ?? "").replace(/\D/g, "")),
     Boolean(values.invoiceVolume),
     Boolean(values.program) && (values.program !== "Jiný" || (values.programOther ?? "").trim().length >= 2),
-    values.consent === true,
   ].filter(Boolean).length;
   const messageLength = (values.message ?? "").length;
 
@@ -274,39 +271,6 @@ export function ContactForm() {
         <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
-      <div className="mt-6">
-        <div className="flex items-start gap-3">
-          <Controller
-            control={control}
-            name="consent"
-            render={({ field }) => (
-              <Checkbox
-                id="contact-consent"
-                ref={field.ref}
-                checked={field.value === true}
-                onCheckedChange={(checked) => field.onChange(checked === true)}
-                onBlur={field.onBlur}
-                aria-invalid={Boolean(errors.consent)}
-                aria-describedby={errors.consent ? "contact-consent-error" : undefined}
-                className="mt-0.5"
-              />
-            )}
-          />
-          <label htmlFor="contact-consent" className="text-[0.92rem] leading-snug">
-            {form.consent}{" "}
-            <Link href="/ochrana-osobnich-udaju" className="link">
-              {form.consentLink}
-            </Link>
-            <span className="ml-1 font-mono text-[0.7rem] text-ink-muted">({form.required})</span>
-          </label>
-        </div>
-        {errors.consent?.message ? (
-          <p id="contact-consent-error" className="mt-2 text-[0.85rem] text-error">
-            {errors.consent.message}
-          </p>
-        ) : null}
-      </div>
-
       <div className="mt-8 flex flex-wrap items-center gap-4">
         <Button type="submit" size="lg" disabled={isSubmitting} className="min-w-[13rem]">
           {isSubmitting ? (
@@ -322,6 +286,13 @@ export function ContactForm() {
           {isSubmitting ? form.sending : ""}
         </span>
       </div>
+      <p className="mt-4 max-w-[52ch] text-[0.85rem] leading-snug text-ink-muted">
+        {form.privacyNotice}{" "}
+        <Link href="/ochrana-osobnich-udaju" className="link">
+          {form.privacyLink}
+        </Link>
+        .
+      </p>
     </form>
   );
 }

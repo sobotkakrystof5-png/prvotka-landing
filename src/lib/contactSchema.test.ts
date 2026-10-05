@@ -11,7 +11,6 @@ const valid = {
   program: "POHODA",
   programOther: "",
   message: "",
-  consent: true,
   startedAt: 1,
 };
 
@@ -23,10 +22,6 @@ describe("contactSchema", () => {
   it("ořízne mezery kolem e-mailu", () => {
     const parsed = contactSchema.parse({ ...valid, email: "  jana@example.com " });
     expect(parsed.email).toBe("jana@example.com");
-  });
-
-  it("odmítne chybějící souhlas", () => {
-    expect(contactSchema.safeParse({ ...valid, consent: false }).success).toBe(false);
   });
 
   it("odmítne příliš dlouhou zprávu", () => {

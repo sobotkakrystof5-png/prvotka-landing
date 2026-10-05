@@ -14,6 +14,7 @@ Co se skutečně stalo, jaký je stav a proč. Pravidla formátu jsou v `pravidl
 
 Znovu se otevírají jen na výslovný pokyn zadavatele.
 
+- **2026-10-05** – Hlavní adresa webu je `https://prvotka.cz` bez www (canonical, sitemapa, JSON-LD), `www` přesměrovává na ni.
 - **2026-10-03** – Doména webu je `prvotka.cz`, protože cílem jsou primárně české účetní kanceláře (shodně s alteno.cz, vizeon.cz, zakaziq.cz). Zatím neregistrovaná.
 
 - **2026-10-03** – Logo: varianta „P + faktura s fajfkou“ od zadavatele, bez konstrukčních linek a bez sloganu „Z dokladů do vašeho systému“. Slogan se na web nedává.
@@ -41,7 +42,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 
 Čekají na zadavatele. Po zodpovězení se smažou.
 
-- [ ] Doména `prvotka.cz` je v Resendu ověřená (2026-10-04, odeslání z `krystof@prvotka.cz` prošlo). Zbývá doplnit `site.domain`, `AGENTS.md`, `.env.example`, `security.txt` (`Canonical`) a ověřit DMARC/SPF/DKIM. Volitelně `prvotka.com` jako přesměrování.
+- [ ] Doména: ve Vercelu přepnout primární doménu z `www.prvotka.cz` na `prvotka.cz` (www → 308 na apex). Dokud se to nestane, canonical a sitemapa ukazují na URL, která přesměrovává. Ověřit DMARC/SPF/DKIM v DNS. Volitelně `prvotka.com` jako přesměrování.
 - [ ] Příběh v sekci Proč to řešit: počet obvolaných kanceláří nebo skutečné citace účetních (se souhlasem)? Do té doby bez čísel a citací.
 - [ ] Vytěžování lokálně, nebo přes cloudové AI API (rozhoduje `site.dataStaysOnPremise`).
 - [ ] Změřený čas na fakturu s aplikací (TEPO).
@@ -49,8 +50,8 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 - [ ] Tým, nebo zakladatel sám (`site.hasTeam`).
 - [ ] Podporované účetní programy kromě POHODY.
 - [ ] Kontaktní údaje: telefon a e-mail na webu (`krystof@prvotka.cz`) doplněné 2026-10-03/04. Schránka musí existovat a `CONTACT_TO_EMAIL` ve Vercelu se nastavuje zvlášť.
-- [ ] Ochrana osobních údajů: text je na webu (2026-10-04), čeká na schválení zadavatelem. Potvrdit: lhůty 6 měsíců / 3 roky (převzaté z Vizeonu), předání do USA přes standardní smluvní doložky a DPA u Vercelu a Resendu, „Web a aplikaci Prvotka provozuji pod svým jménem“. Rozhodnout zaškrtávátko ve formuláři: text stojí na čl. 6 odst. 1 písm. b) a f), checkbox ale říká „Souhlasím se zpracováním“ (souhlas = písm. a). Doporučení: přepsat na „Beru na vědomí, jak zpracovávám osobní údaje“. Po schválení zrušit `noindex` a přidat do sitemapy.
-- [ ] Obchodní podmínky: text je na webu (2026-10-04), čeká na schválení. Doplnit placeholdery: datum účinnosti, výpovědní doba správy, co se stane s aplikací a daty po skončení správy (stejná odpověď patří do nepublikované FAQ „Můžeme skončit?“). Potvrdit hodnoty převzaté z Vizeonu: záloha 30 % / doplatek 70 %, splatnost 14 dní, platnost nabídky 14 dní, záruka 14 dní, reklamace do 30 pracovních dní, licence nevýhradní a zdrojový kód zůstává poskytovateli. Potvrdit nové body: jen pro podnikatele, ne spotřebitele; předání = import souboru z reálných faktur projde; strop náhrady škody ve výši ceny zakázky; zpracovatelská smlouva podle čl. 28 GDPR (zatím neexistuje, je potřeba ji připravit). Doporučení: text nechat zkontrolovat právníkem. Po schválení zrušit `noindex` a přidat do sitemapy.
+- [ ] Ochrana osobních údajů: text je na webu (2026-10-04, doplněný 2026-10-05), čeká na finální schválení. Potvrdit: lhůty 6 měsíců / 3 roky (převzaté z Vizeonu), předání do USA přes standardní smluvní doložky a DPA u Vercelu a Resendu (ověřit, že DPA jsou uzavřené), „Web a aplikaci Prvotka provozuji pod svým jménem“. Po schválení zrušit `noindex` a přidat do sitemapy.
+- [ ] Obchodní podmínky: text je na webu (2026-10-04, doplněný 2026-10-05), placeholdery v textu vyřešené, čeká na finální schválení. Potvrdit hodnoty převzaté z Vizeonu: splatnost 14 dní, platnost nabídky 14 dní, záruka 14 dní, reklamace do 30 pracovních dní, zdrojový kód zůstává poskytovateli. Potvrdit: jen pro podnikatele; předání = import souboru z reálných faktur projde; strop náhrady škody ve výši ceny zakázky; výpověď správy 3 měsíce platí i pro poskytovatele (odpovídá § 1999 OZ). Připravit zpracovatelskou smlouvu podle čl. 28 GDPR (zatím neexistuje) a šablonu nabídky, která na podmínky odkazuje (§ 1751 OZ) a výslovně uvádí strop náhrady škody a nevratnost zálohy (§ 1753 OZ, překvapivá ujednání). FAQ „Můžeme skončit?“ má odpověď, ale je `published: false`, zveřejnit se souhlasem zadavatele. Doporučení: text nechat zkontrolovat právníkem. Po schválení zrušit `noindex` a přidat do sitemapy.
 - [ ] Rate limit formuláře: ve Fázi 6 ověřit Vercel Firewall na Hobby, případně Upstash (nová závislost).
 - [ ] **Schválit design Fáze 2 na `/styleguide`:** písmo nadpisů Newsreader (místo Fraunces/Instrument Serif z briefu, viz changelog), nové tokeny `warn-ink` #8F4E14, `field-border` #857C6C, `sheet` #FCFAF5, `warn-soft` #F5E6D6, logo (vektor překreslený z návrhu zadavatele, nápis v Newsreaderu, barva `ink`), motiv okraje účetní knihy s čísly sekcí.
 - [ ] Lighthouse ověřit na náhledovém nasazení Vercel (lokálně Performance 90–91 při gzip a simulovaném 4G, těsně nad hranicí).
@@ -92,11 +93,34 @@ Aby to další session „neopravovala“ jako chybu.
 - **Právní stránky mají `noindex` a nejsou v sitemapě,** dokud obsahují neschválený text (obě stránky od 2026-10-04).
 - **Ochrana osobních údajů nemá cookie lištu ani zmínku o souhlasu s cookies.** Web žádné cookies ani analytiku nepoužívá (ověřeno 2026-10-04). Při přidání analytiky upravit oddíl 9 a doplnit lištu.
 - **IČO v ukázkách záměrně nemají platný kontrolní součet a účty mají kód banky 0000.** Nemůžou kolidovat se skutečnou firmou.
-- **`security.txt` má placeholder v `Canonical`.** Není platný, dokud zadavatel nezaregistruje doménu (STATE.md).
 
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-05 – Doména `prvotka.cz` v konfiguraci
+- **Co:** `site.domain` je `prvotka.cz` místo `[DOMÉNA]`. `siteUrl()` tím vrací `https://prvotka.cz` pro metadata, canonical, sitemapu, robots a JSON-LD. Obchodní podmínky ukazují „Web: prvotka.cz“. `security.txt` má platný `Canonical`, `.env.example` a `STATE.md` bez placeholderu domény.
+- **Proč:** Pokyn zadavatele (napsal „provtka.cz“, bráno jako překlep schválené `prvotka.cz`). Varianta bez www na základě rozhodnutí zadavatele.
+- **Dopad:** DNS ověřeno 2026-10-05: doména je připojená ve Vercelu, ale primární je teď `www.prvotka.cz` a apex na ni přesměrovává 308. Před nasazením téhle změny musí zadavatel ve Vercelu přepnout primární doménu na `prvotka.cz`. Ověřeno: typy, testy.
+- **Soubory:** `src/config/site.ts`, `public/.well-known/security.txt`, `.env.example`, `.claude/security/STATE.md`, `memory/memory.md`
+
+### 2026-10-05 – Obchodní podmínky: záloha 40 %, doplatek 60 %
+- **Co:** V oddílu Cena a platba je místo zálohy 30 % / doplatku 70 % (převzato z Vizeonu) záloha 40 % před zahájením prací a doplatek 60 % po předání.
+- **Proč:** Rozhodnutí zadavatele.
+- **Dopad:** Izolované, jen text obchodních podmínek. Stejný poměr musí být v šabloně nabídky a v zálohových fakturách.
+- **Soubory:** `src/content/cs.ts`, `memory/memory.md`
+
+### 2026-10-05 – Doladění ochrany osobních údajů a obchodních podmínek, formulář bez zaškrtávátka
+- **Co:** Formulář: zaškrtávátko souhlasu zrušené, pod tlačítkem je věta „Odesláním formuláře berete na vědomí, jak zpracovávám osobní údaje.“ s odkazem. Ukazatel vyplnění je „x/6“, `consent` zmizel ze schématu, testů i textů, nepoužívaná komponenta `ui/checkbox.tsx` smazaná. Ochrana osobních údajů: údaj o povinnosti poskytnutí údajů a důsledcích (čl. 13 odst. 2 písm. e) GDPR), účel a právní základ čl. 6 odst. 1 písm. c) pro daňové doklady, uchování faktur podle daňových předpisů, datum úpravy 5. 10. 2026. Obchodní podmínky: účinnost od 5. 10. 2026, smlouva vzniká potvrzením nabídky, nabídka odkazuje na podmínky (§ 1751 OZ), práce a termín běží od připsání zálohy, kdo platí poplatky služby třetí strany, výpověď správy 3 měsíce pro obě strany od 1. dne následujícího měsíce, po skončení správy předání aplikace na hosting klienta a vrácení dat, smazání dat do 30 dní, licence časově neomezená, role dalšího zpracovatele u účetní kanceláře, e-mail jako písemná forma. FAQ „Co když nás to omezí? Můžeme skončit?“ má odpověď, zůstává nepublikovaná.
+- **Proč:** Na pokyn zadavatele. Zadavatel rozhodl: věta místo zaškrtávátka, výpověď 3 měsíce, předání + smazání, účinnost dnes. Ostatní úpravy doplňují chybějící zákonné náležitosti.
+- **Dopad:** Formulář (brief část 8 upravený: tabulka polí, „3/6“). Ověřeno: typy, lint, 41 testů, Chromium 360 a 1440 px na dev serveru bez vodorovného scrollu, texty i věta pod formulářem se vykreslují. V konzoli dev serveru je varování o chybějícím `key` v `CustomShowcase` (sekce Na míru), se změnou nesouvisí, neopraveno. Na portu 3000 běží starý build (`next-server`) se `[MÍSTO PODNIKÁNÍ]`, není aktuální.
+- **Soubory:** `src/content/cs.ts`, `src/components/sections/ContactForm.tsx`, `src/components/ui/checkbox.tsx` (smazán), `src/lib/contactSchema.ts`, `src/lib/contactSchema.test.ts`, `src/app/actions/contact.test.ts`, `PROJECT-BRIEF.md`, `memory/memory.md`
+
+### 2026-10-04 – Odstraněna věta „Vývoj vede Kryštof Sobotka, autor Alteno a Vizeon.“
+- **Co:** V sekci Kdo za tím stojí už se pod příběhem nezobrazuje věta o tom, kdo vede vývoj. `about.team` je `null`, pokud neplatí `site.hasTeam === true`, a `About` ho pak nevykreslí. Varianta „Pod vedením zkušených programátorů.“ pro `hasTeam: true` zůstává.
+- **Proč:** Pokyn zadavatele. Odchylka od briefu (část 1, záložní varianta věty o týmu).
+- **Dopad:** Ověřeno: typy. Otevřená otázka `site.hasTeam` platí dál.
+- **Soubory:** `src/content/cs.ts`, `src/components/sections/About.tsx`, `memory/memory.md`
 
 ### 2026-10-04 – Obchodní podmínky: kde aplikace běží
 - **Co:** Oddíl Provoz a správa má místo placeholderu `[KDE APLIKACE BĚŽÍ]` dvě varianty: na hostingu klienta (provoz odpovídá klient, zásahy podle hodinové sazby) nebo u poskytovatele se sjednanou měsíční správou. Varianta je v nabídce.

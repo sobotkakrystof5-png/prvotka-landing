@@ -424,7 +424,7 @@ Zásada: každá animace vysvětluje, co produkt dělá, nebo vede pozornost k j
 ### Rozložení
 Dva sloupce (na mobilu pod sebou, formulář první):
 - **Vlevo:** nadpis (návrh: „Postavím aplikaci přesně pro vaši kancelář“), bez perexu (na pokyn zadavatele), kontaktní údaje (Kryštof Sobotka, CEO · e-mail · telefon · IČO), fotka `[FOTO]`. Pod tím blok **„Co můžete čekat“** (styl Chase AI). Obsah jen z ověřených faktů: `[DOBA ODPOVĚDI]`, `[DÉLKA ÚVODNÍHO HOVORU]`, „Nezávazně“. Neověřené body nezobrazuj.
-- **Vpravo:** formulář na podkladu `paper-deep`, s ukazatelem vyplnění „Vyplněno 3/7“ (počítají se jen povinná pole).
+- **Vpravo:** formulář na podkladu `paper-deep`, s ukazatelem vyplnění „Vyplněno 3/6“ (počítají se jen povinná pole).
 
 ### Pole
 | Pole | Typ | Povinné | Validace |
@@ -436,8 +436,9 @@ Dva sloupce (na mobilu pod sebou, formulář první):
 | Faktur měsíčně | čipy | ano | do 200 · 200–600 · 600–1 500 · 1 500+ |
 | Účetní program | čipy | ano | POHODA · Money S3 · ABRA · Jiný (při „Jiný“ se zobrazí textové pole). Popisek neutrální („Jaký účetní program používáte?“). Čipy jsou otázka na návštěvníka, ne tvrzení o podpoře, podporované programy jsou jen v `site.accountingPrograms`. |
 | Zpráva | textarea | ne | max 2 000 znaků |
-| Souhlas se zpracováním osobních údajů | checkbox | ano | odkaz na `/ochrana-osobnich-udaju` |
 | Honeypot | skryté pole | – | musí zůstat prázdné |
+
+Pod tlačítkem odeslat je informační věta „Odesláním formuláře berete na vědomí, jak zpracovávám osobní údaje.“ s odkazem na `/ochrana-osobnich-udaju`. Bez zaškrtávátka, zpracování nestojí na souhlasu (čl. 6 odst. 1 písm. b) a f) GDPR).
 
 ### Chování
 1. Validace na klientu (React Hook Form + Zod) i na serveru (stejné schéma). Server nikdy nevěří klientu.

@@ -1,8 +1,7 @@
 # RFC 9116. Kam hlásit zranitelnost.
-# NEPLATNÉ, dokud zadavatel nezaregistruje doménu (Canonical). Před nasazením doplnit (STATE.md).
 # Expires je povinné, obnovit nejpozději měsíc před vypršením.
 
 Contact: mailto:krystof@prvotka.cz
 Expires: 2027-10-01T00:00:00.000Z
 Preferred-Languages: cs, en
-Canonical: https://[DOMÉNA]/.well-known/security.txt
+Canonical: https://prvotka.cz/.well-known/security.txt
