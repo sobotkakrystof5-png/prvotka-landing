@@ -22,7 +22,8 @@ Rozsah: GHSA-2464-fhr4-w9xw (RCE přes optimalizaci SVG), GHSA-673q-mjm6-r5xr (R
 Výsledek: `next` a `eslint-config-next` 16.4.2, `npm audit --omit=dev` 0 nálezů. Lint, typy, testy, build bez varování. `next start`: CSP s nonce na všech 20 skriptech, Chromium 0 chyb v konzoli.
 Nálezy: 3 výše, všechny opravené upgradem.
 Opraveno: větev `oprava/next-16.4.2` (z `main`) a `faze/F0-priprava`.
-Zůstává otevřené: commit, push a nasazení na pokyn zadavatele. Po nasazení `security-check.sh`. WebKit neověřen.
+Po nasazení (`35685bd`, `dpl_ANFsUPCjRSUyFmF92dnqYg5Uxp7U`, READY): `/`, obě právní stránky, sitemap, llms.txt, OG 200, 404 funguje, 20/20 skriptů s nonce. Hlavičky (HSTS, CSP, nosniff, X-Frame-Options, COOP, CORP, Referrer-Policy, Permissions-Policy) kompletní na `prvotka-landing.vercel.app`. Chromium 360 a 1440 px: 0 chyb v konzoli, formulář se načte, bez vodorovného scrollu. `security-check.sh www.prvotka.cz` po sérii dotazů dostal 403 `x-vercel-mitigated: challenge` (automatická ochrana Vercelu, stejně jako 2026-10-05), hlavičky proto ověřené na produkčním aliasu stejného nasazení. Certifikát Let's Encrypt platí do 2027-01-02.
+Zůstává otevřené: WebKit neověřen.
 
 ## 2026-10-05 – review (před nasazením)
 Spouštěč: commit a nasazení (formulář bez zaškrtávátka souhlasu, právní texty, doména).
