@@ -101,7 +101,7 @@ Nejnovější nahoře.
 ### 2026-10-22 – Upgrade Next.js 16.3.8 → 16.4.2
 - **Co:** `next` a `eslint-config-next` zvednuté na 16.4.2 (přesná verze). `npm audit --omit=dev` bez nálezů.
 - **Proč:** kritické zranitelnosti 16.3.8 (GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr, GHSA-p3m5-59mp-jv5r), rozhodnutí zadavatele.
-- **Dopad:** bezpečnost webu i dema (`.claude/security/AUDIT-LOG.md`). Samostatná větev `oprava/next-16.4.2` z `main` pro ostrý web, stejná změna i ve větvi `faze/F0-priprava`. Ověřeno: lint, typy, testy, build bez varování, `next start` (stránky, 404, sitemap, OG, CSP s nonce na všech skriptech), Chromium bez chyb v konzoli a s načteným formulářem. WebKit neověřen (není nainstalovaný). Necommitnuto, nenasazeno.
+- **Dopad:** bezpečnost webu i dema (`.claude/security/AUDIT-LOG.md`). Samostatná větev `oprava/next-16.4.2` z `main` pro ostrý web, stejná změna i ve větvi `faze/F0-priprava`. Ověřeno: lint, typy, testy, build bez varování, `next start` (stránky, 404, sitemap, OG, CSP s nonce na všech skriptech), Chromium bez chyb v konzoli a s načteným formulářem. WebKit neověřen (není nainstalovaný). Nasazeno 2026-10-22 (`35685bd`, větev sloučená do `main`), živý web ověřen, viz `AUDIT-LOG.md`.
 - **Soubory:** `package.json`, `package-lock.json`, `AGENTS.md`, `.claude/security/STATE.md`, `.claude/security/AUDIT-LOG.md`, `memory/memory.md`
 
 ### 2026-10-22 – Demo aplikace v repozitáři: skupina tras (site), blok Demo v CLAUDE.md a AGENTS.md
