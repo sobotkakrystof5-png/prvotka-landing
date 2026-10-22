@@ -48,6 +48,13 @@ Nálezy: (1) na apexu chybí SPF, DMARC je `p=none`, DKIM Google nenalezen. (2) 
 Opraveno v kódu: (2) cache hlavičky, (3) kontakt v JSON-LD, `/llms.txt`. CSP beze změny.
 Zůstává otevřené: (1) DNS u WEDOSu a DKIM v Google Admin, zadavatel. Primární doména ve Vercelu je pořád `www` (apex → 308 na www).
 
+## 2026-10-22 – kontrola po nasazení (2b69f79)
+Spouštěč: nasazení externích oprav na produkci.
+Rozsah: `security-check.sh` proti https://www.prvotka.cz, `curl` na `/llms.txt` a cache hlavičky.
+Výsledek: 28 OK, 4 varování, 1 chyba. `/llms.txt` 200, `/ceo.jpg` má novou cache hlavičku, hlavičky a CSP beze změny, certifikát platí do 2027-01-02.
+Falešné nálezy: „nepodařilo se načíst certifikát“ a „TLS 1.3 nepodporováno“ jsou omezení skriptu na macOS (LibreSSL), `openssl` certifikát přečte. `security.txt` vrátil 403 jen kvůli Vercel bot challenge po opakovaných dotazech skriptu, soubor v `public/.well-known/` existuje.
+Zůstává otevřené: SPF a DMARC (`p=none`) na DNS, CAA záznam, zadavatel u WEDOSu. Opakovat kontrolu `security.txt` z prohlížeče.
+
 ## Incidenty
 
 Zatím žádné.
