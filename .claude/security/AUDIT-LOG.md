@@ -41,6 +41,13 @@ Nálezy: (1) `npm audit --omit=dev` hlásil 7× high (`braces` přes `micromatch
 Opraveno: (1) `shadcn` přesunut do `devDependencies`, audit produkčních závislostí hlásí 0. (2) skript `typecheck` spouští nejdřív `next typegen`. Ověřeno na čistém klonu přes `npm ci`.
 Zůstává otevřené: zranitelnost v dev nástroji `shadcn` zůstává, dokud ji upstream neopraví. Riziko je jen při lokálním spuštění CLI.
 
+## 2026-10-22 – externí kontrola webu
+Spouštěč: pokyn zadavatele s nálezy (SPF, vizitka, rychlost).
+Rozsah: `dig` na prvotka.cz, hlavičky produkce přes `curl`.
+Nálezy: (1) na apexu chybí SPF, DMARC je `p=none`, DKIM Google nenalezen. (2) statické soubory z `public/` měly `max-age=0`. (3) JSON-LD bez telefonu a e-mailu.
+Opraveno v kódu: (2) cache hlavičky, (3) kontakt v JSON-LD, `/llms.txt`. CSP beze změny.
+Zůstává otevřené: (1) DNS u WEDOSu a DKIM v Google Admin, zadavatel. Primární doména ve Vercelu je pořád `www` (apex → 308 na www).
+
 ## Incidenty
 
 Zatím žádné.

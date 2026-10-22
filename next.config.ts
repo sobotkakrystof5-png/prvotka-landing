@@ -35,7 +35,16 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
 
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    // Stránky se renderují s nonce, proto se necachují. Statické soubory z `public/`
+    // nemají v názvu hash, takže den čerstvě a týden „stale-while-revalidate“.
+    const publicAssetCache = [
+      { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+    ];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: "/brands/:path*", headers: publicAssetCache },
+      { source: "/ceo.jpg", headers: publicAssetCache },
+    ];
   },
 
   images: {

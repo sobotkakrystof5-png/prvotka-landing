@@ -59,6 +59,8 @@ function Slider({
           data-slot="slider-thumb"
           key={index}
           aria-label={thumbLabel}
+          // Radix doplní hodnotu až po hydrataci, na serveru by atribut chyběl (W3C chyba).
+          aria-valuenow={_values[index]}
           aria-valuetext={thumbValueText}
           className="relative block size-5 shrink-0 rounded-full border-2 border-accent bg-sheet shadow-paper transition-transform after:absolute after:-inset-2.5 hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent active:scale-110"
         />

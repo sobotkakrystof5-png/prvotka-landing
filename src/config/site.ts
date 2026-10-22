@@ -56,6 +56,8 @@ export interface SiteConfig {
   responseTime: string | null;
   introCallLength: string | null;
   brands: readonly Brand[];
+  /** Veřejné profily firmy (LinkedIn, Facebook) pro `sameAs` ve strukturovaných datech. Prázdné pole = nevykreslí se. */
+  profiles: readonly string[];
 }
 
 export const site: SiteConfig = {
@@ -75,6 +77,7 @@ export const site: SiteConfig = {
   accountingPrograms: ["POHODA", "Money S3", "ABRA", "HELIOS", "PREMIER system"],
   responseTime: null, // [DOBA ODPOVĚDI]
   introCallLength: null, // [DÉLKA ÚVODNÍHO HOVORU]
+  profiles: [], // [PROFILY – LinkedIn, Facebook doplní zadavatel]
   brands: [
     {
       name: "Alteno",

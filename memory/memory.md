@@ -42,7 +42,7 @@ Znovu se otevírají jen na výslovný pokyn zadavatele.
 
 Čekají na zadavatele. Po zodpovězení se smažou.
 
-- [ ] Doména: ve Vercelu přepnout primární doménu z `www.prvotka.cz` na `prvotka.cz` (www → 308 na apex). Dokud se to nestane, canonical a sitemapa ukazují na URL, která přesměrovává. DNS (2026-10-05): na apexu chybí SPF pro Google Workspace (`v=spf1 include:_spf.google.com ~all`), DMARC je `p=none`, cíl `p=quarantine`. Volitelně `prvotka.com` jako přesměrování.
+- [ ] Doména: ve Vercelu přepnout primární doménu z `www.prvotka.cz` na `prvotka.cz` (www → 308 na apex). Dokud se to nestane, canonical a sitemapa ukazují na URL, která přesměrovává. DNS u WEDOSu (2026-10-22 zkontrolováno, stále platí): na apexu chybí SPF pro Google Workspace (`v=spf1 include:_spf.google.com ~all`), DMARC je `p=none`, cíl `p=quarantine`. Navíc zapnout DKIM v Google Admin (Gmail → Ověřování e-mailů, selektor `google`) a do `sameAs` doplnit LinkedIn/Facebook do `site.profiles`. Volitelně `prvotka.com` jako přesměrování.
 - [ ] Příběh v sekci Proč to řešit: počet obvolaných kanceláří nebo skutečné citace účetních (se souhlasem)? Do té doby bez čísel a citací.
 - [ ] Vytěžování lokálně, nebo přes cloudové AI API (rozhoduje `site.dataStaysOnPremise`).
 - [ ] Změřený čas na fakturu s aplikací (TEPO).
@@ -97,6 +97,24 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-22 – Skill web-externi-audit-oprava
+- **Co:** Vznikl skill `web-externi-audit-oprava` (SKILL.md, `scripts/audit-check.sh`, `reference/nalezy.md`, `reference/opravy-v-kodu.md`). Zdroj je `~/Documents/claude skills/web-externi-audit-oprava/`, kopie v `.claude/skills/`.
+- **Proč:** Na pokyn zadavatele, aby se výpisy externích auditů webu v budoucnu zpracovaly od analýzy po opravu se stejným postupem.
+- **Dopad:** Izolované, kód webu se nemění. Skript jen čte (curl, dig, validátor W3C, volitelně Lighthouse). Při změně jedné kopie aktualizovat i druhou.
+- **Soubory:** `.claude/skills/web-externi-audit-oprava/`
+
+### 2026-10-22 – Druhá externí kontrola: posuvníky, odložený formulář
+- **Co:** Posuvníky kalkulačky mají `aria-valuenow` už v HTML ze serveru (W3C chyba, 4×). Formulář (Zod + RHF, ~103 kB) se stahuje až při přiblížení sekce Kontakt (IntersectionObserver, 800 px), ne při načtení stránky. Zástupný blok formuláře má i informaci o zpracování osobních údajů s odkazem, takže je vidět bez JS a před načtením formuláře.
+- **Proč:** Na pokyn zadavatele po další externí kontrole.
+- **Dopad:** Lighthouse na produkci: mobil 90, desktop 99, přístupnost 100, tedy skóre kontroly (62/77, kontrasty, dotykové plochy) se z mého měření nepotvrdilo, pravděpodobně jde o PSI s throttlingem. Falešné poplachy: „Google Analytics“ (na webu žádné měření není) a `unsafe-eval` v CSP (v produkci jen `style-src 'unsafe-inline'`, DECISIONS #003). Hlavní příčina několika nálezů (security.txt, og:image rozměry, jazyk): apex `prvotka.cz` ve Vercelu pořád přesměrovává 308 na `www`, ale canonical, og:url a og:image mířejí na apex. Přepnutí primární domény zatím neprovedeno (zamítnuto při pokusu přes CLI, musí zadavatel ve Vercelu). `Počet obrázků` v kontrole je obsahová věc, neřešeno. Lint, typy, 41 testů, build prošly, chování ověřeno v Chromu přes `next start`. Nenasazeno.
+- **Soubory:** `src/components/ui/slider.tsx`, `src/components/sections/ContactFormLoader.tsx`, `memory/memory.md`
+
+### 2026-10-22 – Nálezy externí kontroly: JSON-LD, llms.txt, cache
+- **Co:** JSON-LD poskytovatele má `email`, `telephone`, `contactPoint` a `sameAs` ze `site.profiles` (zatím prázdné, nevykreslí se). Přibyl `/llms.txt` (`src/app/llms.txt/route.ts`, text jen ze `site.ts` a `cs.ts`). `next.config.ts` posílá `Cache-Control: public, max-age=86400, stale-while-revalidate=604800` pro `/ceo.jpg` a `/brands/*`.
+- **Proč:** Na pokyn zadavatele po externí kontrole webu (SPF, vizitka pro vyhledávače, rychlost).
+- **Dopad:** Adresa v JSON-LD záměrně není (rozhodnutí 2026-10-04). HTML se dál necachuje, protože nonce v CSP vyžaduje dynamický render. `/_next/static/immutable/*` už cache měl. Kontrola uvádí 105 kB nepoužitého JS: Motion i formulář se už načítají odloženě, další dělení by byl zásah do struktury komponent, nic jsem nepřepisoval. V kódu neřešeno: SPF, DKIM a DMARC (DNS je u WEDOSu, nastavuje zadavatel, viz Otevřené otázky). Lint, typy, 41 testů a build prošly, hlavičky a JSON-LD ověřené přes `next start`. Nenasazeno.
+- **Soubory:** `src/config/site.ts`, `src/lib/jsonLd.ts`, `src/app/llms.txt/route.ts`, `next.config.ts`, `memory/memory.md`, `.claude/security/AUDIT-LOG.md`
 
 ### 2026-10-05 – Doména `prvotka.cz` v konfiguraci
 - **Co:** `site.domain` je `prvotka.cz` místo `[DOMÉNA]`. `siteUrl()` tím vrací `https://prvotka.cz` pro metadata, canonical, sitemapu, robots a JSON-LD. Obchodní podmínky ukazují „Web: prvotka.cz“. `security.txt` má platný `Canonical`, `.env.example` a `STATE.md` bez placeholderu domény.

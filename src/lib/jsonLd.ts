@@ -4,6 +4,7 @@ import { cs } from "@/content/cs";
 /**
  * Strukturovaná data (brief, část 10): poskytovatel služby, produkt a FAQ
  * jen s publikovanými otázkami. Cena jen při `site.showPrice`.
+ * Adresa v datech záměrně není (zadavatel místo podnikání nezveřejňuje).
  * Data pochází jen z `site.ts` a `cs.ts`, nikdy z uživatelského vstupu.
  */
 export function buildJsonLd() {
@@ -16,6 +17,16 @@ export function buildJsonLd() {
     founder: { "@type": "Person", name: site.ceo, jobTitle: "CEO" },
     areaServed: { "@type": "Country", name: "Česká republika" },
     knowsLanguage: "cs",
+    email: site.email,
+    telephone: site.phone,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: site.email,
+      telephone: site.phone,
+      availableLanguage: "cs",
+    },
+    ...(site.profiles.length > 0 ? { sameAs: site.profiles } : {}),
   };
 
   const product = {
