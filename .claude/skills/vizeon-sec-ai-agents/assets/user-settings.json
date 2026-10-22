@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.npmrc)",
+      "Read(~/.supabase/**)",
+      "Read(~/.vercel/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.kube/**)"
+    ]
+  },
+  "cleanupPeriodDays": 14
+}

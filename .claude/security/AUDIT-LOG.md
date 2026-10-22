@@ -16,6 +16,14 @@ Zůstává otevřené: co a proč
 
 ---
 
+## 2026-10-22 – review (upgrade závislostí)
+Spouštěč: `npm audit` hlásil kritické zranitelnosti Next.js 16.3.8.
+Rozsah: GHSA-2464-fhr4-w9xw (RCE přes optimalizaci SVG), GHSA-673q-mjm6-r5xr (RCE v `use cache`), GHSA-p3m5-59mp-jv5r (DoS přes Server Actions).
+Výsledek: `next` a `eslint-config-next` 16.4.2, `npm audit --omit=dev` 0 nálezů. Lint, typy, testy, build bez varování. `next start`: CSP s nonce na všech 20 skriptech, Chromium 0 chyb v konzoli.
+Nálezy: 3 výše, všechny opravené upgradem.
+Opraveno: větev `oprava/next-16.4.2` (z `main`) a `faze/F0-priprava`.
+Zůstává otevřené: commit, push a nasazení na pokyn zadavatele. Po nasazení `security-check.sh`. WebKit neověřen.
+
 ## 2026-10-05 – review (před nasazením)
 Spouštěč: commit a nasazení (formulář bez zaškrtávátka souhlasu, právní texty, doména).
 Rozsah: diff proti `c247360`: `contactSchema.ts`, `ContactForm.tsx`, `site.ts`, `security.txt`, `.env.example`. Hledání tajných údajů a HTML sinků v diffu, lint, typy, 41 testů, `next build`.

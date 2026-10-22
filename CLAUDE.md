@@ -116,3 +116,16 @@ When you change anything security-relevant, update the matching file in the same
 `web-security-setup` for the baseline, `web-security-review` before commits and deploys,
 `web-security-audit` after deploys and monthly, `web-security-memory` at session start
 and whenever recording a change.
+
+---
+
+## Demo (`/demo`): samostatná pravidla a paměť
+
+V repozitáři vzniká i demo aplikace pro klienty (brána `/demo`, plocha `/demo/app`). Má vlastní pravidla, brief, fáze F0 až F10 a paměť:
+
+@memory/demo/index.md
+
+- Při práci na demu platí `docs/demo/AGENTS-demo.md`, `docs/demo/BRIEF.md` a fáze v `docs/demo/phases/`. Zapisuje se jen do `memory/demo/memory.md`, ne do `memory/memory.md`.
+- Session dema se řídí příkazy `/session-start`, `/phase F<číslo>` a `/session-end`. Fáze webu (brief, část 12) a fáze dema jsou dvě oddělené řady.
+- Pokud se pravidla webu a dema rozcházejí, u kódu dema platí `AGENTS-demo.md`. Bezpečnostní pravidla webu (CSP, tajné klíče, `.claude/security/`) platí i pro demo a nesmí se oslabit.
+- Změna marketingového webu kvůli demu (sdílené tokeny, CSP, `proxy.ts`) se zapíše do obou pamětí.

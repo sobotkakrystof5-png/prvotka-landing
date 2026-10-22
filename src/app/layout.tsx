@@ -4,8 +4,6 @@ import { connection } from "next/server";
 import { site, siteUrl } from "@/config/site";
 import { cs } from "@/content/cs";
 import { MotionProvider } from "@/components/motion/MotionProvider";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import { SiteHeader } from "@/components/layout/SiteHeader";
 import "./globals.css";
 
 /*
@@ -97,13 +95,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         >
           {cs.skipLink}
         </a>
-        <MotionProvider>
-          <SiteHeader />
-          <main id="obsah" tabIndex={-1} className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-        </MotionProvider>
+        {/* Navbar a patička webu jsou v (site)/layout.tsx, demo má vlastní demo/layout.tsx. */}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

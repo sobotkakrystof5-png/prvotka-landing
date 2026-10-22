@@ -6,7 +6,7 @@ Co se skutečně stalo, jaký je stav a proč. Pravidla formátu jsou v `pravidl
 
 - **Projekt:** landing page produktu Prvotka pro vytěžování faktur (PDF, skeny, fotky → ISDOC/ISDOCX) pro účetní kanceláře.
 - **Fáze:** 2026-10-03 přestavěná sekce Proč to řešit a pořadí sekcí, čeká na schválení zadavatelem (screenshot sekcí 02 a 03). Fáze 1–8 implementované lokálně 2026-10-02 na pokyn „kompletní implementace“ (bez průběžných zastávek po fázích). Čeká na schválení: hlavně design na `/styleguide` (Fáze 2), pak celkový dojem (Fáze 7). Fáze 9 (nasazení) blokují podklady v Otevřených otázkách. Nic není commitnuté ani nasazené.
-- **Stack:** Next.js 16.3.8 (App Router, Turbopack) + React 19 + TypeScript, Tailwind CSS 4, shadcn/ui (Radix), Motion 14, React Hook Form + Zod 4, Resend, Vitest 5, npm. Hosting Vercel Hobby.
+- **Stack:** Next.js 16.4.2 (App Router, Turbopack) + React 19 + TypeScript, Tailwind CSS 4, shadcn/ui (Radix), Motion 14, React Hook Form + Zod 4, Resend, Vitest 5, npm. Hosting Vercel Hobby.
 - **Co existuje:** celá landing page (10 sekcí, 9 viditelných), právní stránky s textem čekajícím na schválení, 404, `/styleguide`, OG obrázek, sitemap, robots, JSON-LD, Server Action formuláře, bezpečnostní vrstva a `.claude/security/`, CI workflow. Zadání je `PROJECT-BRIEF.md` (verze 1.1).
 - **Ověřeno lokálně (`next start`, 2026-10-02):** lint, typy, 31 testů, build bez varování. Chromium i WebKit na 360/768/1024/1440 px bez vodorovného scrollu, 0 porušení CSP, 0 chyb v konzoli, i s `prefers-reduced-motion`. Lighthouse mobil: Performance 90–91, Accessibility 100, Best Practices 100, SEO 100, CLS 0. Formulář: validace a chybové stavy fungují, skutečné odeslání e-mailu ověřené až 2026-10-04 (viz changelog).
 
@@ -97,6 +97,18 @@ Aby to další session „neopravovala“ jako chybu.
 ## Changelog
 
 Nejnovější nahoře.
+
+### 2026-10-22 – Upgrade Next.js 16.3.8 → 16.4.2
+- **Co:** `next` a `eslint-config-next` zvednuté na 16.4.2 (přesná verze). `npm audit --omit=dev` bez nálezů.
+- **Proč:** kritické zranitelnosti 16.3.8 (GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr, GHSA-p3m5-59mp-jv5r), rozhodnutí zadavatele.
+- **Dopad:** bezpečnost webu i dema (`.claude/security/AUDIT-LOG.md`). Samostatná větev `oprava/next-16.4.2` z `main` pro ostrý web, stejná změna i ve větvi `faze/F0-priprava`. Ověřeno: lint, typy, testy, build bez varování, `next start` (stránky, 404, sitemap, OG, CSP s nonce na všech skriptech), Chromium bez chyb v konzoli a s načteným formulářem. WebKit neověřen (není nainstalovaný). Necommitnuto, nenasazeno.
+- **Soubory:** `package.json`, `package-lock.json`, `AGENTS.md`, `.claude/security/STATE.md`, `.claude/security/AUDIT-LOG.md`, `memory/memory.md`
+
+### 2026-10-22 – Demo aplikace v repozitáři: skupina tras (site), blok Demo v CLAUDE.md a AGENTS.md
+- **Co:** do repa přibylo demo pro klienty (`/demo`, `/demo/app`) s vlastní pamětí `memory/demo/` a pravidly `docs/demo/`. Stránky webu se přesunuly do skupiny tras `src/app/(site)/` s vlastním layoutem (navbar, patička), kořenový layout drží jen písma, metadata a `MotionProvider`. `not-found.tsx` si navbar a patičku vkládá sama. Přibyly `src/instrumentation.ts`, demo proměnné v `.env.example`, Drizzle, Playwright, `allowImportingTsExtensions` v `tsconfig.json` a ignorování `.claude/**` v ESLintu.
+- **Proč:** na pokyn zadavatele, demo fáze F0 (`docs/demo/phases/F0-priprava.md`), rozhodnutí D-018 v `memory/demo/memory.md`.
+- **Dopad:** adresy webu se nemění, ověřeno `/`, `/ochrana-osobnich-udaju` a 404 v produkčním buildu. Bez `DEMO_ENABLED=true` web demo proměnné nepotřebuje. CSP se nezměnila. `npm audit` hlásí kritickou zranitelnost Next 16.3.8 (oprava 16.4.2), týká se i běžícího webu, viz otevřené otázky.
+- **Soubory:** `src/app/layout.tsx`, `src/app/(site)/*`, `src/app/not-found.tsx`, `src/instrumentation.ts`, `CLAUDE.md`, `AGENTS.md`, `.env.example`, `eslint.config.mjs`, `tsconfig.json`, `package.json`
 
 ### 2026-10-22 – Skill web-externi-audit-oprava
 - **Co:** Vznikl skill `web-externi-audit-oprava` (SKILL.md, `scripts/audit-check.sh`, `reference/nalezy.md`, `reference/opravy-v-kodu.md`). Zdroj je `~/Documents/claude skills/web-externi-audit-oprava/`, kopie v `.claude/skills/`.

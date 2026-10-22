@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Převzaté skilly a jejich skripty (cizí kód), ne součást aplikace.
+    ".claude/**",
   ]),
 ]);
 

@@ -1,0 +1,99 @@
+# VIZEON – offsite záloha DB + Supabase Storage → .github/workflows/backup.yml
+# Předpoklady:
+#  - GitHub Environment "backup" (jen main, required reviewers pro změny), secrets:
+#      SUPABASE_DB_URL        – session pooler URL s rolí, která smí číst (ideálně dedikovaná read-only role pro dump)
+#      SUPABASE_S3_ENDPOINT   – https://<project-ref>.storage.supabase.co/storage/v1/s3
+#      SUPABASE_S3_REGION, SUPABASE_S3_KEY_ID, SUPABASE_S3_SECRET  – Storage S3 access key (Settings → Storage → S3)
+#      BACKUP_S3_ENDPOINT, BACKUP_S3_KEY_ID, BACKUP_S3_SECRET, BACKUP_BUCKET – cílové úložiště v EU
+#          s ZAPNUTÝM versioningem a Object Lock (compliance mode). Klíč smí jen PutObject (ne Delete).
+#      AGE_RECIPIENT          – veřejný klíč age; SOUKROMÝ klíč je offline u odpovědné osoby, NE v GitHubu.
+#  - Připni akce na SHA.
+
+name: backup
+on:
+  schedule:
+    - cron: '23 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    environment: backup
+    timeout-minutes: 120
+    steps:
+      - name: Nástroje
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq age rclone
+          # pg_dump musí odpovídat major verzi serveru (Supabase = Postgres 15/17) – nainstaluj odpovídající klienta
+          sudo apt-get install -y -qq postgresql-common
+          yes | sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+          sudo apt-get install -y -qq postgresql-client-17
+
+      - name: Dump databáze (šifrovaný)
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          AGE_RECIPIENT: ${{ secrets.AGE_RECIPIENT }}
+        run: |
+          set -euo pipefail
+          TS=$(date -u +%Y%m%dT%H%M%SZ)
+          echo "TS=$TS" >> "$GITHUB_ENV"
+          pg_dump "$DB_URL" --format=custom --no-owner --no-privileges \
+            --schema=public --schema=audit --schema=app --schema=auth --schema=storage \
+            | age -r "$AGE_RECIPIENT" > "db-$TS.dump.age"
+          sha256sum "db-$TS.dump.age" > "db-$TS.dump.age.sha256"
+          ls -lh db-*
+
+      - name: Konfigurace rclone
+        env:
+          SB_EP: ${{ secrets.SUPABASE_S3_ENDPOINT }}
+          SB_REGION: ${{ secrets.SUPABASE_S3_REGION }}
+          SB_ID: ${{ secrets.SUPABASE_S3_KEY_ID }}
+          SB_SECRET: ${{ secrets.SUPABASE_S3_SECRET }}
+          BK_EP: ${{ secrets.BACKUP_S3_ENDPOINT }}
+          BK_ID: ${{ secrets.BACKUP_S3_KEY_ID }}
+          BK_SECRET: ${{ secrets.BACKUP_S3_SECRET }}
+        run: |
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf <<EOF
+          [supabase]
+          type = s3
+          provider = Other
+          endpoint = $SB_EP
+          region = $SB_REGION
+          access_key_id = $SB_ID
+          secret_access_key = $SB_SECRET
+          force_path_style = true
+
+          [offsite]
+          type = s3
+          provider = Other
+          endpoint = $BK_EP
+          access_key_id = $BK_ID
+          secret_access_key = $BK_SECRET
+          EOF
+          chmod 600 ~/.config/rclone/rclone.conf
+
+      - name: Upload DB dumpu
+        run: rclone copy . "offsite:${{ secrets.BACKUP_BUCKET }}/db/" --include "db-${TS}.dump.age*"
+
+      - name: Záloha Storage (copy, NE sync – smazání se nepropaguje; verze drží versioning)
+        run: |
+          set -euo pipefail
+          for b in $(rclone lsf supabase: --dirs-only | tr -d '/'); do
+            rclone copy "supabase:$b" "offsite:${{ secrets.BACKUP_BUCKET }}/storage/$b" \
+              --checksum --transfers 8 --fast-list
+          done
+
+      - name: Úklid
+        if: always()
+        run: rm -f db-*.age* ~/.config/rclone/rclone.conf
+
+# Poznámky:
+#  - Objekty Storage jsou zálohované nešifrovaně na straně klienta – spoléhá se na šifrování úložiště.
+#    Pro přísně důvěrné dokumenty použij rclone "crypt" remote nad offsite.
+#  - Selhání zálohy musí vyvolat alert (GitHub notifikace / healthcheck ping na konci jobu).
+#  - Obnovu testuj kvartálně (viz SKILL.md, sekce Test obnovy).

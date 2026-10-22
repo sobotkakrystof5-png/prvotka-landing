@@ -1,0 +1,54 @@
+# SECURITY.md – <název projektu>
+
+> Živý dokument. Aktualizuje se při každé změně architektury, rolí, dat nebo integrací.
+> Umístění: `docs/security/SECURITY.md`
+
+## 1. Základní údaje
+
+| Položka | Hodnota |
+|---|---|
+| Klient / správce osobních údajů | |
+| Dodavatel / zpracovatel | VIZEON |
+| Odpovědná osoba za bezpečnost (dodavatel) | jméno, telefon, e-mail |
+| Odpovědná osoba za bezpečnost (klient) | |
+| Cílová úroveň OWASP ASVS | L1 / L2 / L2+ / L3 |
+| Klasifikace nejcitlivějších dat | veřejné / interní / důvěrné / přísně důvěrné |
+| Multi-tenant | ano / ne – model izolace: |
+| AI agenti v produkci | ano / ne – seznam: |
+| Spadá klient pod NIS2 / ZKB? | ano / ne / neověřeno |
+
+## 2. Prostředí
+
+| Prostředí | Supabase projekt | Vercel projekt/env | Data | Přístup |
+|---|---|---|---|---|
+| local | supabase start | – | pouze seed | vývojář |
+| preview/staging | samostatný projekt | Preview (chráněno) | anonymizovaná | tým |
+| production | samostatný projekt | Production | skutečná | min. počet osob, MFA |
+
+## 3. Odkazy na bezpečnostní dokumentaci
+
+- `threat-model.md` – hrozby a opatření
+- `data-inventory.md` – co za data, kde všude leží, retence
+- `access-matrix.md` – role × operace × zdroje
+- `exceptions.md` – schválené výjimky s termínem
+- `risk-register.md` – zbytková rizika
+- `incident-runbook.md` – postup při incidentu
+- `release-gate-<datum>.md` – záznamy o schválení nasazení
+
+## 4. Bezpečnostní rozhodnutí (ADR)
+
+| Datum | Rozhodnutí | Důvod | Kdo schválil |
+|---|---|---|---|
+
+## 5. Kontakty pro incident
+
+| Role | Jméno | Telefon | Zástup |
+|---|---|---|---|
+| Incident lead | | | |
+| Technický zásah | | | |
+| Klient – kontakt | | | |
+| DPO / právní | | | |
+
+## 6. Hlášení zranitelností
+
+Kontakt: security@<doména> (zveřejněno v `/.well-known/security.txt`).

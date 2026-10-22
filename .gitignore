@@ -50,3 +50,6 @@ next-env.d.ts
 .claude/settings.local.json
 /playwright-report/
 /test-results/
+
+# design-taste-frontend: historie návrhů, necommitovat (D-017 dema)
+.taste-skill/

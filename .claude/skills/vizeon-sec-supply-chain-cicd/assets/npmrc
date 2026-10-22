@@ -1,0 +1,8 @@
+# → .npmrc v kořeni projektu (pro npm). U pnpm 10+ jsou skripty závislostí blokované výchozím stavem;
+# povolené balíčky vyjmenuj v package.json → "pnpm": { "onlyBuiltDependencies": ["esbuild", "sharp"] }
+# a v pnpm-workspace.yaml nastav:  minimumReleaseAge: 2880   (minuty)
+ignore-scripts=true
+save-exact=true
+audit-level=high
+fund=false
+engine-strict=true

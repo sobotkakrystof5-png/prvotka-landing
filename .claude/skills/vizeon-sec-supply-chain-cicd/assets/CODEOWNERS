@@ -1,0 +1,21 @@
+# → .github/CODEOWNERS   (nahraď @vizeon/security skutečným týmem nebo uživatelem)
+# Změny v těchto cestách vyžadují schválení odpovědné osoby (branch protection: Require review from Code Owners)
+
+/supabase/migrations/            @vizeon/security
+/supabase/functions/             @vizeon/security
+/src/server/auth*                @vizeon/security
+/src/server/authz*               @vizeon/security
+/src/server/admin/               @vizeon/security
+/src/server/integrations/        @vizeon/security
+/app/api/webhooks/               @vizeon/security
+/middleware.ts                   @vizeon/security
+/proxy.ts                        @vizeon/security
+/next.config.*                   @vizeon/security
+/vercel.json                     @vizeon/security
+/.github/                        @vizeon/security
+/.claude/                        @vizeon/security
+/CLAUDE.md                       @vizeon/security
+/AGENTS.md                       @vizeon/security
+/docs/security/                  @vizeon/security
+/package.json                    @vizeon/security
+/pnpm-lock.yaml                  @vizeon/security
