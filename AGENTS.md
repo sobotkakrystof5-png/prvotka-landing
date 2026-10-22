@@ -59,7 +59,7 @@ Lokální `next start` běží přes http. `upgrade-insecure-requests` se proto 
 
 | Vrstva | Technologie | Poznámka |
 |---|---|---|
-| Framework | Next.js 16.3 (App Router, Turbopack) | `src/proxy.ts` místo `middleware.ts` |
+| Framework | Next.js 16.4 (App Router, Turbopack) | `src/proxy.ts` místo `middleware.ts` |
 | UI | React 19 + TypeScript | `strict: true` |
 | Styly | Tailwind CSS 4 | tokeny v `src/app/globals.css` (`:root` + `@theme inline`), žádný `tailwind.config` |
 | Komponenty | shadcn/ui (Radix, preset nova) | jen jako kostra, přestylované přes tokeny. Utilita `cn` z balíčku `cn` (od shadcn) |

@@ -9,7 +9,7 @@
 
 - Web: `prvotka.cz` (`site.domain` od 2026-10-05). Doména je připojená ve Vercelu, primární musí být `prvotka.cz` (zatím `www`, zadavatel přepne)
 - Hosting: Vercel Hobby (rozhodnutí v DECISIONS.md #001)
-- Framework: Next.js 16.3.8 (App Router), React 19, Turbopack
+- Framework: Next.js 16.4.2 (App Router), React 19, Turbopack
 - Repo: lokální git ve složce projektu, GitHub repo zatím nezaložené (čeká na souhlas zadavatele)
 - Hlavičky: CSP v `src/proxy.ts`, ostatní v `next.config.ts` (`headers()`)
 
